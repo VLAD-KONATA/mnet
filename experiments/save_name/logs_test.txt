@@ -1,0 +1,8 @@
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:
