@@ -203,7 +203,7 @@ if __name__ == '__main__':
     import torch
     from mamba_ssm import Mamba
 
-    batch, length, dim = 256, 256,256
+    batch, length, dim = 4, 32,32
     x = torch.randn(batch, length, dim).to("cuda")
     model = Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters

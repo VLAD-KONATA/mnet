@@ -93,7 +93,7 @@ class Decoder(torch.nn.Module):
                 torch.nn.ReLU(inplace=False)
             )
       
-        self.moduleConv = Basic(1024, 512)
+        self.moduleConv = Basic(512, 512)
         self.moduleUpsample4 = Upsample(512, 512)
 
         self.moduleDeconv3 = Basic(512, 256)
@@ -131,12 +131,14 @@ class convAE(torch.nn.Module):
 
         self.encoder = Encoder(t_length, n_channel)
         self.decoder = Decoder(t_length, n_channel)
-        self.memory = Memory(memory_size,feature_dim, key_dim, temp_update, temp_gather)
+        #self.memory = Memory(memory_size,feature_dim, key_dim, temp_update, temp_gather)
        
 
-    def forward(self, x, keys,train=True):
+    def forward(self, x, keys=None,train=True):
 
         fea = self.encoder(x)
+        output=self.decoder(fea)
+        return output
         if train:
             #updated_fea= self.memory(fea, keys, train)
             updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss, spreading_loss = self.memory(fea, keys, train)
@@ -151,7 +153,7 @@ class convAE(torch.nn.Module):
             output = self.decoder(updated_fea)
             
             return output, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss
-        
+
                                           
 
 if __name__=='__main__':

@@ -1,0 +1,18 @@
+{
+    "model"      : "unet_mamba_test",
+    "in_channels":4,
+    "out_channels":7,
+    "init_features":64,
+
+    "kernel_size": 3,
+    "n_feats": 64,
+    "num_blocks": 16,
+    "res_scale": 1,
+
+    "head_num": 1,
+    
+    "window_size":16,
+    "win_num_sqrt":16
+
+    
+}

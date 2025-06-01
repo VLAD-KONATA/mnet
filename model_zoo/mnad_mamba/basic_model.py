@@ -115,7 +115,7 @@ class newmodel(nn.Module):
         x_head = self.head(x)
         res1=x_head
         
-        res1 = self.crossview1(res1)+res1
+        res1 = self.crossview1(res1)
         align_list.append(res1)
         #x_head=self.wide(x_head,keys,train)
         mamba_res=res1
@@ -123,32 +123,33 @@ class newmodel(nn.Module):
         output2=self.mamba(mamba_res)
         output2=einops.rearrange(output2,'(b d) h w -> b d h w',b=x.shape[0])
         if train:
-            output1, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss, spreading_loss = self.model1(res1, keys, train)
-        
-        else:
-            output1, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss = self.model1(res1, keys, train)
-            
-            #output = self.model1(x_head, keys, train)
-        output=output1+res1
+            #output1, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss, spreading_loss = self.model1(res1, keys, train)
+            output1 = self.model1(res1)
 
-        res2=self.crossview2(output)+output
+        else:
+            #output1, fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss = self.model1(res1, keys, train)
+            output1 = self.model1(res1)
+            
+        output=output1+output2+res1
+
+        res2=self.crossview2(output)+res1
         align_list.append(res2)
         
 
         res=self.fuse_align(torch.cat(align_list,1))
         
-        res+=x_head
+        res=res+x_head+res1
         out= self.tail(res)
         
         out[:,::self.args.upscale] = x
         out = out.permute(0,2,3,1).contiguous()
+        return out
 
         if train:
             return out,fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss, spreading_loss
         else:
             return out,fea, updated_fea, keys, softmax_score_query, softmax_score_memory, gathering_loss
 
-        #return out
 
 
 

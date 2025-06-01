@@ -38,7 +38,7 @@ def main():
     total_x_y_ssim=0
     total_x_z_ssim=0
     total_y_z_ssim=0
-
+    nanid=0
 
     for id, (name,volume) in enumerate(dataloader):
         # volume [bz=1,h,w,s]
@@ -82,7 +82,7 @@ def main():
         end_time=time.time()
         times=end_time-begin_time
 
-        if False:
+        if True:
             a=sr
             a=a.cpu().numpy()
             a=a.transpose(2,1,0)
@@ -100,7 +100,11 @@ def main():
         sr = sr.cuda()
         gt = gt.cuda()
         psnr = calc_psnr(sr,gt).item()
-        average_psnr += psnr
+        import math
+        if math.isnan(psnr):
+            nanid+=1
+        else:
+            average_psnr += psnr
 
         gt = gt.cuda()
         sr = sr.cuda()
@@ -126,7 +130,7 @@ def main():
         total_x_z_ssim+=x_z_ssim
         total_y_z_ssim+=y_z_ssim
 
-    average_psnr /= (id+1)
+    average_psnr /= (id+1-nanid)
     total_x_y_ssim /= (id+1)
     total_x_z_ssim /= (id+1)
     total_y_z_ssim /= (id+1)

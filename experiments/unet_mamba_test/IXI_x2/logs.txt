@@ -1,0 +1,676 @@
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-05-11 17:21:31.069540epoch[1/500] psnrTr:10.771123 lossTr:0.201553657651 lr:0.000003000000START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 100
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-05-11 17:22:25.325616epoch[1/100] psnrTr:10.771113 lossTr:0.201553776860 lr:0.000003000000
+2025-05-11 17:22:40.392333epoch[2/100] psnrTr:12.411388 lossTr:0.151146903634 lr:0.000003000000
+2025-05-11 17:22:55.679830epoch[3/100] psnrTr:23.646933 lossTr:0.046119321138 lr:0.000062400000
+2025-05-11 17:23:10.396249epoch[4/100] psnrTr:30.359061 lossTr:0.020378693938 lr:0.000121800000
+2025-05-11 17:23:25.181133epoch[5/100] psnrTr:31.649217 lossTr:0.018804593012 lr:0.000181200000
+2025-05-11 17:23:40.083261epoch[6/100] psnrTr:32.804122 lossTr:0.016446258873 lr:0.000240600000
+2025-05-11 17:23:55.552561epoch[7/100] psnrTr:33.347676 lossTr:0.015335836448 lr:0.000298337926
+2025-05-11 17:24:10.329134epoch[8/100] psnrTr:nan lossTr:nan lr:0.000297608779
+2025-05-11 17:24:25.391434epoch[9/100] psnrTr:nan lossTr:nan lr:0.000296748763
+2025-05-11 17:24:40.437147epoch[10/100] psnrTr:nan lossTr:nan lr:0.000295758727
+2025-05-11 17:24:55.626884epoch[11/100] psnrTr:nan lossTr:nan lr:0.000294639648
+2025-05-11 17:25:10.811477epoch[12/100] psnrTr:nan lossTr:nan lr:0.000293392630
+2025-05-11 17:25:25.780438epoch[13/100] psnrTr:nan lossTr:nan lr:0.000292018904
+2025-05-11 17:25:40.016166epoch[14/100] psnrTr:nan lossTr:nan lr:0.000290519826
+2025-05-11 17:25:54.165295epoch[15/100] psnrTr:nan lossTr:nan lr:0.000288896874
+2025-05-11 17:26:08.784322epoch[16/100] psnrTr:nan lossTr:nan lr:0.000287151652
+2025-05-11 17:26:22.707447epoch[17/100] psnrTr:nan lossTr:nan lr:0.000285285881
+2025-05-11 17:26:35.807719epoch[18/100] psnrTr:nan lossTr:nan lr:0.000283301402
+2025-05-11 17:26:48.699391epoch[19/100] psnrTr:nan lossTr:nan lr:0.000281200174
+2025-05-11 17:27:01.444237epoch[20/100] psnrTr:nan lossTr:nan lr:0.000278984270START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 100
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-05-11 17:30:51.013979epoch[1/100] psnrTr:10.771086 lossTr:0.201554164290 lr:0.000003000000
+2025-05-11 17:31:06.269252epoch[2/100] psnrTr:12.411251 lossTr:0.151150122285 lr:0.000003000000
+2025-05-11 17:31:21.442805epoch[3/100] psnrTr:23.644960 lossTr:0.046117242426 lr:0.000062400000
+2025-05-11 17:31:36.370091epoch[4/100] psnrTr:30.360230 lossTr:0.020328165963 lr:0.000121800000
+2025-05-11 17:31:50.999520epoch[5/100] psnrTr:31.780848 lossTr:0.018767353147 lr:0.000181200000
+2025-05-11 17:32:05.639811epoch[6/100] psnrTr:32.599112 lossTr:0.016959233209 lr:0.000240600000
+2025-05-11 17:32:21.039882epoch[7/100] psnrTr:33.713866 lossTr:0.014680372551 lr:0.000298337926
+2025-05-11 17:32:35.894126epoch[8/100] psnrTr:33.756992 lossTr:0.014539715834 lr:0.000297608779
+2025-05-11 17:32:50.860756epoch[9/100] psnrTr:nan lossTr:nan lr:0.000296748763START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 100
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 100
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-05-11 18:49:31.880531epoch[1/100] psnrTr:9.735364 lossTr:0.230236411095 lr:0.000003000000
+2025-05-11 18:49:54.939224epoch[2/100] psnrTr:10.948178 lossTr:0.184485390782 lr:0.000003000000
+2025-05-11 18:50:17.682423epoch[3/100] psnrTr:21.133993 lossTr:0.046828851104 lr:0.000062400000
+2025-05-11 18:50:38.342021epoch[4/100] psnrTr:27.879131 lossTr:0.018230373040 lr:0.000121800000
+2025-05-11 18:50:59.062579epoch[5/100] psnrTr:31.267722 lossTr:0.015374688432 lr:0.000181200000
+2025-05-11 18:51:21.485162epoch[6/100] psnrTr:33.624149 lossTr:0.013497290201 lr:0.000240600000
+2025-05-11 18:51:44.087219epoch[7/100] psnrTr:35.043688 lossTr:0.011990719475 lr:0.000298337926
+2025-05-11 18:52:06.886317epoch[8/100] psnrTr:nan lossTr:nan lr:0.000297608779
+2025-05-11 18:52:29.148671epoch[9/100] psnrTr:nan lossTr:nan lr:0.000296748763START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 100
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-05-11 18:53:15.760063epoch[1/100] psnrTr:14.246130 lossTr:0.165719613433 lr:0.000003000000
+2025-05-11 18:53:38.515075epoch[2/100] psnrTr:16.815550 lossTr:0.108102530241 lr:0.000003000000
+2025-05-11 18:54:00.962542epoch[3/100] psnrTr:22.557062 lossTr:0.046690501273 lr:0.000062400000
+2025-05-11 18:54:24.156868epoch[4/100] psnrTr:27.943399 lossTr:0.026513068005 lr:0.000121800000
+2025-05-11 18:54:45.610528epoch[5/100] psnrTr:29.441753 lossTr:0.022033762187 lr:0.000181200000
+2025-05-11 18:55:06.185252epoch[6/100] psnrTr:30.304038 lossTr:0.019462432712 lr:0.000240600000
+2025-05-11 18:55:28.707286epoch[7/100] psnrTr:31.120655 lossTr:0.017782956362 lr:0.000298337926
+2025-05-11 18:55:51.439626epoch[8/100] psnrTr:31.533215 lossTr:0.016556700692 lr:0.000297608779
+2025-05-11 18:56:13.744988epoch[9/100] psnrTr:31.636453 lossTr:0.016239559278 lr:0.000296748763
+2025-05-11 18:56:36.714816epoch[10/100] psnrTr:32.053670 lossTr:0.015660604462 lr:0.000295758727
+2025-05-11 18:56:59.355115epoch[11/100] psnrTr:32.099716 lossTr:0.015301954001 lr:0.000294639648
+2025-05-11 18:57:21.724167epoch[12/100] psnrTr:31.065634 lossTr:0.016821324825 lr:0.000293392630
+2025-05-11 18:57:42.236742epoch[13/100] psnrTr:32.385155 lossTr:0.014540005475 lr:0.000292018904
+2025-05-11 18:58:02.685534epoch[14/100] psnrTr:32.822471 lossTr:0.014393991791 lr:0.000290519826
+2025-05-11 18:58:23.864128epoch[15/100] psnrTr:32.845184 lossTr:0.014344428666 lr:0.000288896874
+2025-05-11 18:58:46.212308epoch[16/100] psnrTr:33.165003 lossTr:0.014031156898 lr:0.000287151652
+2025-05-11 18:59:09.010749epoch[17/100] psnrTr:32.880622 lossTr:0.014132666402 lr:0.000285285881
+2025-05-11 18:59:31.814331epoch[18/100] psnrTr:32.919221 lossTr:0.013769090176 lr:0.000283301402
+2025-05-11 18:59:54.066933epoch[19/100] psnrTr:33.366466 lossTr:0.012890296988 lr:0.000281200174
+2025-05-11 19:00:16.867826epoch[20/100] psnrTr:32.985245 lossTr:0.013448921964 lr:0.000278984270
+2025-05-11 19:00:39.330024epoch[21/100] psnrTr:32.872842 lossTr:0.014001946896 lr:0.000276655878
+2025-05-11 19:01:01.805433epoch[22/100] psnrTr:32.558405 lossTr:0.013746963814 lr:0.000274217294
+2025-05-11 19:01:23.932827epoch[23/100] psnrTr:33.166209 lossTr:0.012625280768 lr:0.000271670927
+2025-05-11 19:01:46.559094epoch[24/100] psnrTr:33.475766 lossTr:0.012192472816 lr:0.000269019288
+2025-05-11 19:02:07.693380epoch[25/100] psnrTr:33.591881 lossTr:0.011812186800 lr:0.000266264994
+2025-05-11 19:02:28.170972epoch[26/100] psnrTr:33.762350 lossTr:0.011423644610 lr:0.000263410765
+2025-05-11 19:02:50.831968epoch[27/100] psnrTr:33.745289 lossTr:0.011486098170 lr:0.000260459415
+2025-05-11 19:03:13.683089epoch[28/100] psnrTr:33.904664 lossTr:0.011465728283 lr:0.000257413859
+2025-05-11 19:03:36.474576epoch[29/100] psnrTr:34.044389 lossTr:0.011056452990 lr:0.000254277102
+2025-05-11 19:03:58.807659epoch[30/100] psnrTr:34.039118 lossTr:0.011070256121 lr:0.000251052239
+2025-05-11 19:04:21.450322epoch[31/100] psnrTr:34.313410 lossTr:0.010720738210 lr:0.000247742452
+2025-05-11 19:04:44.003394epoch[32/100] psnrTr:34.437509 lossTr:0.010613398626 lr:0.000244351009
+2025-05-11 19:05:06.417888epoch[33/100] psnrTr:34.304514 lossTr:0.010619428940 lr:0.000240881256
+2025-05-11 19:05:27.691854epoch[34/100] psnrTr:34.262689 lossTr:0.010722834617 lr:0.000237336617
+2025-05-11 19:05:48.985302epoch[35/100] psnrTr:34.418351 lossTr:0.010444495827 lr:0.000233720591
+2025-05-11 19:06:12.114981epoch[36/100] psnrTr:34.748098 lossTr:0.009973389097 lr:0.000230036746
+2025-05-11 19:06:34.433042epoch[37/100] psnrTr:34.889512 lossTr:0.009885553271 lr:0.000226288717
+2025-05-11 19:06:57.310533epoch[38/100] psnrTr:34.917068 lossTr:0.009939914569 lr:0.000222480204
+2025-05-11 19:07:19.774989epoch[39/100] psnrTr:34.559467 lossTr:0.010357273743 lr:0.000218614965
+2025-05-11 19:07:42.420629epoch[40/100] psnrTr:34.786487 lossTr:0.009939768352 lr:0.000214696815
+2025-05-11 19:08:04.720772epoch[41/100] psnrTr:35.334333 lossTr:0.009388437495 lr:0.000210729619
+2025-05-11 19:08:27.509202epoch[42/100] psnrTr:35.283110 lossTr:0.009640097618 lr:0.000206717294
+2025-05-11 19:08:49.535546epoch[43/100] psnrTr:35.090102 lossTr:0.009695672430 lr:0.000202663799
+2025-05-11 19:09:12.175574epoch[44/100] psnrTr:35.081124 lossTr:0.009733138606 lr:0.000198573135
+2025-05-11 19:09:34.333625epoch[45/100] psnrTr:35.361246 lossTr:0.009578014724 lr:0.000194449338
+2025-05-11 19:09:56.979358epoch[46/100] psnrTr:35.557897 lossTr:0.009381622076 lr:0.000190296477
+2025-05-11 19:10:19.704493epoch[47/100] psnrTr:35.556469 lossTr:0.009293225594 lr:0.000186118653
+2025-05-11 19:10:42.197859epoch[48/100] psnrTr:35.610359 lossTr:0.009343014099 lr:0.000181919987
+2025-05-11 19:11:03.602120epoch[49/100] psnrTr:35.480165 lossTr:0.009235717356 lr:0.000177704622
+2025-05-11 19:11:26.139047epoch[50/100] psnrTr:35.831148 lossTr:0.009136016481 lr:0.000173476720
+2025-05-11 19:11:48.908590epoch[51/100] psnrTr:35.533577 lossTr:0.009344187565 lr:0.000169240452
+2025-05-11 19:12:11.656876epoch[52/100] psnrTr:36.023735 lossTr:0.008754748851 lr:0.000165000000
+2025-05-11 19:12:33.936888epoch[53/100] psnrTr:36.411460 lossTr:0.008420892991 lr:0.000160759548
+2025-05-11 19:12:56.382194epoch[54/100] psnrTr:36.286353 lossTr:0.008319835179 lr:0.000156523280
+2025-05-11 19:13:18.654440epoch[55/100] psnrTr:36.661424 lossTr:0.008165274747 lr:0.000152295378
+2025-05-11 19:13:39.926873epoch[56/100] psnrTr:36.655291 lossTr:0.008133038878 lr:0.000148080013
+2025-05-11 19:14:00.391664epoch[57/100] psnrTr:36.655968 lossTr:0.008141240105 lr:0.000143881347
+2025-05-11 19:14:22.807838epoch[58/100] psnrTr:36.877303 lossTr:0.007982853800 lr:0.000139703523
+2025-05-11 19:14:45.221016epoch[59/100] psnrTr:37.054647 lossTr:0.007834289223 lr:0.000135550662
+2025-05-11 19:15:07.761892epoch[60/100] psnrTr:37.587277 lossTr:0.007290659938 lr:0.000131426865
+2025-05-11 19:15:29.801337epoch[61/100] psnrTr:37.158772 lossTr:0.007819562219 lr:0.000127336201
+2025-05-11 19:15:52.022800epoch[62/100] psnrTr:37.692876 lossTr:0.007359090727 lr:0.000123282706
+2025-05-11 19:16:15.027578epoch[63/100] psnrTr:37.777951 lossTr:0.007431393024 lr:0.000119270381
+2025-05-11 19:16:37.486571epoch[64/100] psnrTr:37.789348 lossTr:0.007387364749 lr:0.000115303185
+2025-05-11 19:16:59.896628epoch[65/100] psnrTr:38.155201 lossTr:0.006883214694 lr:0.000111385035
+2025-05-11 19:17:22.400106epoch[66/100] psnrTr:37.896783 lossTr:0.007242261432 lr:0.000107519796
+2025-05-11 19:17:45.040835epoch[67/100] psnrTr:38.037453 lossTr:0.006961571053 lr:0.000103711283
+2025-05-11 19:18:07.570788epoch[68/100] psnrTr:38.481590 lossTr:0.006840393413 lr:0.000099963254
+2025-05-11 19:18:29.800714epoch[69/100] psnrTr:38.120255 lossTr:0.006866628770 lr:0.000096279409
+2025-05-11 19:18:52.301750epoch[70/100] psnrTr:38.720188 lossTr:0.006638166029 lr:0.000092663383
+2025-05-11 19:19:14.702226epoch[71/100] psnrTr:38.575702 lossTr:0.006691643968 lr:0.000089118744
+2025-05-11 19:19:37.678441epoch[72/100] psnrTr:38.036623 lossTr:0.007182858884 lr:0.000085648991
+2025-05-11 19:19:59.832228epoch[73/100] psnrTr:38.751803 lossTr:0.006594523787 lr:0.000082257548
+2025-05-11 19:20:22.545230epoch[74/100] psnrTr:38.487300 lossTr:0.006766317878 lr:0.000078947761
+2025-05-11 19:20:45.213072epoch[75/100] psnrTr:38.384988 lossTr:0.006839335430 lr:0.000075722898
+2025-05-11 19:21:07.795542epoch[76/100] psnrTr:38.842509 lossTr:0.006448901258 lr:0.000072586141
+2025-05-11 19:21:30.413105epoch[77/100] psnrTr:39.171567 lossTr:0.006349252537 lr:0.000069540585
+2025-05-11 19:21:50.608356epoch[78/100] psnrTr:38.963007 lossTr:0.007125784177 lr:0.000066589235
+2025-05-11 19:22:10.865132epoch[79/100] psnrTr:39.097751 lossTr:0.006854528561 lr:0.000063735006
+2025-05-11 19:22:31.887294epoch[80/100] psnrTr:38.914616 lossTr:0.006923516747 lr:0.000060980712
+2025-05-11 19:22:54.103619epoch[81/100] psnrTr:39.638065 lossTr:0.006486719009 lr:0.000058329073
+2025-05-11 19:23:16.072291epoch[82/100] psnrTr:39.822529 lossTr:0.006307701115 lr:0.000055782706
+2025-05-11 19:23:38.617504epoch[83/100] psnrTr:40.042955 lossTr:0.006149556488 lr:0.000053344122
+2025-05-11 19:24:00.777923epoch[84/100] psnrTr:39.436428 lossTr:0.006430886220 lr:0.000051015730
+2025-05-11 19:24:23.188831epoch[85/100] psnrTr:39.804574 lossTr:0.006232132670 lr:0.000048799826
+2025-05-11 19:24:46.036552epoch[86/100] psnrTr:39.683909 lossTr:0.006328136194 lr:0.000046698598
+2025-05-11 19:25:08.538699epoch[87/100] psnrTr:40.092816 lossTr:0.006000360008 lr:0.000044714119
+2025-05-11 19:25:30.780726epoch[88/100] psnrTr:40.155224 lossTr:0.005880347453 lr:0.000042848348
+2025-05-11 19:25:52.931443epoch[89/100] psnrTr:39.972720 lossTr:0.006047671195 lr:0.000041103126
+2025-05-11 19:26:15.708527epoch[90/100] psnrTr:40.221385 lossTr:0.005943222903 lr:0.000039480174
+2025-05-11 19:26:38.309013epoch[91/100] psnrTr:40.118646 lossTr:0.005980357528 lr:0.000037981096
+2025-05-11 19:27:00.586495epoch[92/100] psnrTr:40.352932 lossTr:0.005863345694 lr:0.000036607370
+2025-05-11 19:27:22.804215epoch[93/100] psnrTr:40.668179 lossTr:0.005642736331 lr:0.000035360352
+2025-05-11 19:27:45.124789epoch[94/100] psnrTr:40.470021 lossTr:0.005787477829 lr:0.000034241273
+2025-05-11 19:28:07.282121epoch[95/100] psnrTr:40.495411 lossTr:0.005729059223 lr:0.000033251237
+2025-05-11 19:28:28.545975epoch[96/100] psnrTr:40.832665 lossTr:0.005516040139 lr:0.000032391221
+2025-05-11 19:28:49.706999epoch[97/100] psnrTr:40.379345 lossTr:0.005894737318 lr:0.000031662074
+2025-05-11 19:29:12.075530epoch[98/100] psnrTr:40.198967 lossTr:0.006014426239 lr:0.000031064515
+2025-05-11 19:29:34.756905epoch[99/100] psnrTr:40.717957 lossTr:0.005591292866 lr:0.000030599135
+2025-05-11 19:29:57.344614epoch[100/100] psnrTr:40.787074 lossTr:0.005540910643 lr:0.000030266392START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : unet_mamba_test
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 200
+warmup_epoch : 0.05
+ckpt_dir : experiments/unet_mamba_test/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+in_channels : 4
+out_channels : 7
+init_features : 64
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-05-12 01:25:35.095342epoch[1/200] psnrTr:15.331684 lossTr:0.135128423572 lr:0.000003000000
+2025-05-12 01:26:18.138181epoch[2/200] psnrTr:16.636956 lossTr:0.106016211212 lr:0.000003000000
+2025-05-12 01:26:59.985316epoch[3/200] psnrTr:nan lossTr:nan lr:0.000032700000
+2025-05-12 01:27:41.565083epoch[4/200] psnrTr:nan lossTr:nan lr:0.000062400000
+2025-05-12 01:28:23.465777epoch[5/200] psnrTr:nan lossTr:nan lr:0.000092100000
+2025-05-12 01:29:03.496491epoch[6/200] psnrTr:nan lossTr:nan lr:0.000121800000
+2025-05-12 01:29:43.125001epoch[7/200] psnrTr:nan lossTr:nan lr:0.000151500000
+2025-05-12 01:30:23.568809epoch[8/200] psnrTr:nan lossTr:nan lr:0.000181200000
+2025-05-12 01:31:05.281257epoch[9/200] psnrTr:nan lossTr:nan lr:0.000210900000
+2025-05-12 01:31:47.055437epoch[10/200] psnrTr:nan lossTr:nan lr:0.000240600000
+2025-05-12 01:32:28.485569epoch[11/200] psnrTr:nan lossTr:nan lr:0.000270300000
+2025-05-12 01:33:10.313683epoch[12/200] psnrTr:nan lossTr:nan lr:0.000298337926
+2025-05-12 01:33:51.812972epoch[13/200] psnrTr:nan lossTr:nan lr:0.000297989759
+2025-05-12 01:34:33.666560epoch[14/200] psnrTr:nan lossTr:nan lr:0.000297608779
+2025-05-12 01:35:15.291895epoch[15/200] psnrTr:nan lossTr:nan lr:0.000297195079
+2025-05-12 01:35:55.952429epoch[16/200] psnrTr:nan lossTr:nan lr:0.000296748763
+2025-05-12 01:36:37.178115epoch[17/200] psnrTr:nan lossTr:nan lr:0.000296269939
+2025-05-12 01:37:18.881746epoch[18/200] psnrTr:nan lossTr:nan lr:0.000295758727
+2025-05-12 01:38:00.807556epoch[19/200] psnrTr:nan lossTr:nan lr:0.000295215251
+2025-05-12 01:38:42.557437epoch[20/200] psnrTr:nan lossTr:nan lr:0.000294639648
+2025-05-12 01:39:22.951770epoch[21/200] psnrTr:nan lossTr:nan lr:0.000294032057
+2025-05-12 01:40:03.511470epoch[22/200] psnrTr:nan lossTr:nan lr:0.000293392630
+2025-05-12 01:40:45.194710epoch[23/200] psnrTr:nan lossTr:nan lr:0.000292721523
+2025-05-12 01:41:26.833013epoch[24/200] psnrTr:nan lossTr:nan lr:0.000292018904
+2025-05-12 01:42:08.590478epoch[25/200] psnrTr:nan lossTr:nan lr:0.000291284944
+2025-05-12 01:42:49.889321epoch[26/200] psnrTr:nan lossTr:nan lr:0.000290519826
+2025-05-12 01:43:31.274844epoch[27/200] psnrTr:nan lossTr:nan lr:0.000289723737
+2025-05-12 01:44:12.803699epoch[28/200] psnrTr:nan lossTr:nan lr:0.000288896874
+2025-05-12 01:44:54.788969epoch[29/200] psnrTr:nan lossTr:nan lr:0.000288039442
+2025-05-12 01:45:36.644618epoch[30/200] psnrTr:nan lossTr:nan lr:0.000287151652
+2025-05-12 01:46:18.647542epoch[31/200] psnrTr:nan lossTr:nan lr:0.000286233723
+2025-05-12 01:47:00.292953epoch[32/200] psnrTr:nan lossTr:nan lr:0.000285285881
+2025-05-12 01:47:42.098520epoch[33/200] psnrTr:nan lossTr:nan lr:0.000284308360
+2025-05-12 01:48:23.980260epoch[34/200] psnrTr:nan lossTr:nan lr:0.000283301402
+2025-05-12 01:49:05.787132epoch[35/200] psnrTr:nan lossTr:nan lr:0.000282265254
+2025-05-12 01:49:47.801480epoch[36/200] psnrTr:nan lossTr:nan lr:0.000281200174
+2025-05-12 01:50:29.180835epoch[37/200] psnrTr:nan lossTr:nan lr:0.000280106422
+2025-05-12 01:51:11.119209epoch[38/200] psnrTr:nan lossTr:nan lr:0.000278984270
+2025-05-12 01:51:52.800662epoch[39/200] psnrTr:nan lossTr:nan lr:0.000277833994
+2025-05-12 01:52:34.126103epoch[40/200] psnrTr:nan lossTr:nan lr:0.000276655878
+2025-05-12 01:53:13.762973epoch[41/200] psnrTr:nan lossTr:nan lr:0.000275450212
+2025-05-12 01:53:55.239604epoch[42/200] psnrTr:nan lossTr:nan lr:0.000274217294
+2025-05-12 01:54:37.024726epoch[43/200] psnrTr:nan lossTr:nan lr:0.000272957429
+2025-05-12 01:55:18.831453epoch[44/200] psnrTr:nan lossTr:nan lr:0.000271670927
+2025-05-12 01:56:00.114194epoch[45/200] psnrTr:nan lossTr:nan lr:0.000270358105
+2025-05-12 01:56:42.002588epoch[46/200] psnrTr:nan lossTr:nan lr:0.000269019288
+2025-05-12 01:57:24.087250epoch[47/200] psnrTr:nan lossTr:nan lr:0.000267654805
+2025-05-12 01:58:05.912528epoch[48/200] psnrTr:nan lossTr:nan lr:0.000266264994
+2025-05-12 01:58:48.322842epoch[49/200] psnrTr:nan lossTr:nan lr:0.000264850198
+2025-05-12 01:59:30.101127epoch[50/200] psnrTr:nan lossTr:nan lr:0.000263410765
+2025-05-12 02:00:10.552032epoch[51/200] psnrTr:nan lossTr:nan lr:0.000261947050
+2025-05-12 02:00:50.766456epoch[52/200] psnrTr:nan lossTr:nan lr:0.000260459415
+2025-05-12 02:01:30.622046epoch[53/200] psnrTr:nan lossTr:nan lr:0.000258948228
+2025-05-12 02:02:11.588992epoch[54/200] psnrTr:nan lossTr:nan lr:0.000257413859
+2025-05-12 02:02:53.329112epoch[55/200] psnrTr:nan lossTr:nan lr:0.000255856689
+2025-05-12 02:03:35.349501epoch[56/200] psnrTr:nan lossTr:nan lr:0.000254277102
+2025-05-12 02:04:17.290224epoch[57/200] psnrTr:nan lossTr:nan lr:0.000252675487
+2025-05-12 02:04:58.737618epoch[58/200] psnrTr:nan lossTr:nan lr:0.000251052239
+2025-05-12 02:05:40.206755epoch[59/200] psnrTr:nan lossTr:nan lr:0.000249407759
+2025-05-12 02:06:22.035149epoch[60/200] psnrTr:nan lossTr:nan lr:0.000247742452
+2025-05-12 02:07:03.893526epoch[61/200] psnrTr:nan lossTr:nan lr:0.000246056730
+2025-05-12 02:07:45.132651epoch[62/200] psnrTr:nan lossTr:nan lr:0.000244351009
+2025-05-12 02:08:26.789158epoch[63/200] psnrTr:nan lossTr:nan lr:0.000242625709
+2025-05-12 02:09:08.089217epoch[64/200] psnrTr:nan lossTr:nan lr:0.000240881256
+2025-05-12 02:09:49.840778epoch[65/200] psnrTr:nan lossTr:nan lr:0.000239118080
+2025-05-12 02:10:30.475972epoch[66/200] psnrTr:nan lossTr:nan lr:0.000237336617
+2025-05-12 02:11:11.813401epoch[67/200] psnrTr:nan lossTr:nan lr:0.000235537306
+2025-05-12 02:11:52.795882epoch[68/200] psnrTr:nan lossTr:nan lr:0.000233720591
+2025-05-12 02:12:33.172632epoch[69/200] psnrTr:nan lossTr:nan lr:0.000231886920
+2025-05-12 02:13:14.746890epoch[70/200] psnrTr:nan lossTr:nan lr:0.000230036746
+2025-05-12 02:13:56.819443epoch[71/200] psnrTr:nan lossTr:nan lr:0.000228170525
+2025-05-12 02:14:38.252117epoch[72/200] psnrTr:nan lossTr:nan lr:0.000226288717
+2025-05-12 02:15:19.914517epoch[73/200] psnrTr:nan lossTr:nan lr:0.000224391788
+2025-05-12 02:16:01.634269epoch[74/200] psnrTr:nan lossTr:nan lr:0.000222480204
+2025-05-12 02:16:43.057968epoch[75/200] psnrTr:nan lossTr:nan lr:0.000220554438
+2025-05-12 02:17:24.689611epoch[76/200] psnrTr:nan lossTr:nan lr:0.000218614965
+2025-05-12 02:18:06.224437epoch[77/200] psnrTr:nan lossTr:nan lr:0.000216662263
+2025-05-12 02:18:47.740416epoch[78/200] psnrTr:nan lossTr:nan lr:0.000214696815
+2025-05-12 02:19:29.426107epoch[79/200] psnrTr:nan lossTr:nan lr:0.000212719104
+2025-05-12 02:20:10.797086epoch[80/200] psnrTr:nan lossTr:nan lr:0.000210729619
+2025-05-12 02:20:52.838190epoch[81/200] psnrTr:nan lossTr:nan lr:0.000208728851
+2025-05-12 02:21:33.822148epoch[82/200] psnrTr:nan lossTr:nan lr:0.000206717294
+2025-05-12 02:22:15.914797epoch[83/200] psnrTr:nan lossTr:nan lr:0.000204695444
+2025-05-12 02:22:57.510403epoch[84/200] psnrTr:nan lossTr:nan lr:0.000202663799
+2025-05-12 02:23:38.399058epoch[85/200] psnrTr:nan lossTr:nan lr:0.000200622862
+2025-05-12 02:24:19.950125epoch[86/200] psnrTr:nan lossTr:nan lr:0.000198573135
+2025-05-12 02:25:01.660637epoch[87/200] psnrTr:nan lossTr:nan lr:0.000196515124
+2025-05-12 02:25:42.399278epoch[88/200] psnrTr:nan lossTr:nan lr:0.000194449338
+2025-05-12 02:26:23.909980epoch[89/200] psnrTr:nan lossTr:nan lr:0.000192376285
+2025-05-12 02:27:05.795198epoch[90/200] psnrTr:nan lossTr:nan lr:0.000190296477
+2025-05-12 02:27:47.419622epoch[91/200] psnrTr:nan lossTr:nan lr:0.000188210429
+2025-05-12 02:28:28.507619epoch[92/200] psnrTr:nan lossTr:nan lr:0.000186118653
+2025-05-12 02:29:10.322366epoch[93/200] psnrTr:nan lossTr:nan lr:0.000184021666
+2025-05-12 02:29:52.416835epoch[94/200] psnrTr:nan lossTr:nan lr:0.000181919987
+2025-05-12 02:30:32.583002epoch[95/200] psnrTr:nan lossTr:nan lr:0.000179814132
+2025-05-12 02:31:12.603718epoch[96/200] psnrTr:nan lossTr:nan lr:0.000177704622
+2025-05-12 02:31:54.388873epoch[97/200] psnrTr:nan lossTr:nan lr:0.000175591978
+2025-05-12 02:32:36.013856epoch[98/200] psnrTr:nan lossTr:nan lr:0.000173476720
+2025-05-12 02:33:17.922971epoch[99/200] psnrTr:nan lossTr:nan lr:0.000171359371
+2025-05-12 02:33:59.741850epoch[100/200] psnrTr:nan lossTr:nan lr:0.000169240452
+2025-05-12 02:34:40.816658epoch[101/200] psnrTr:nan lossTr:nan lr:0.000167120488
+2025-05-12 02:35:20.689042epoch[102/200] psnrTr:nan lossTr:nan lr:0.000165000000
+2025-05-12 02:36:02.613254epoch[103/200] psnrTr:nan lossTr:nan lr:0.000162879512
+2025-05-12 02:36:44.396084epoch[104/200] psnrTr:nan lossTr:nan lr:0.000160759548
+2025-05-12 02:37:25.953993epoch[105/200] psnrTr:nan lossTr:nan lr:0.000158640629
+2025-05-12 02:38:07.950407epoch[106/200] psnrTr:nan lossTr:nan lr:0.000156523280
+2025-05-12 02:38:49.735379epoch[107/200] psnrTr:nan lossTr:nan lr:0.000154408022
+2025-05-12 02:39:31.214537epoch[108/200] psnrTr:nan lossTr:nan lr:0.000152295378
+2025-05-12 02:40:12.512422epoch[109/200] psnrTr:nan lossTr:nan lr:0.000150185868
+2025-05-12 02:40:54.088784epoch[110/200] psnrTr:nan lossTr:nan lr:0.000148080013
+2025-05-12 02:41:35.527753epoch[111/200] psnrTr:nan lossTr:nan lr:0.000145978334
+2025-05-12 02:42:17.113398epoch[112/200] psnrTr:nan lossTr:nan lr:0.000143881347
+2025-05-12 02:42:58.528603epoch[113/200] psnrTr:nan lossTr:nan lr:0.000141789571
+2025-05-12 02:43:40.068471epoch[114/200] psnrTr:nan lossTr:nan lr:0.000139703523
+2025-05-12 02:44:22.144659epoch[115/200] psnrTr:nan lossTr:nan lr:0.000137623715
+2025-05-12 02:45:03.830978epoch[116/200] psnrTr:nan lossTr:nan lr:0.000135550662
+2025-05-12 02:45:45.934519epoch[117/200] psnrTr:nan lossTr:nan lr:0.000133484876
+2025-05-12 02:46:27.716330epoch[118/200] psnrTr:nan lossTr:nan lr:0.000131426865
+2025-05-12 02:47:09.302611epoch[119/200] psnrTr:nan lossTr:nan lr:0.000129377138
+2025-05-12 02:47:50.181856epoch[120/200] psnrTr:nan lossTr:nan lr:0.000127336201
+2025-05-12 02:48:31.786226epoch[121/200] psnrTr:nan lossTr:nan lr:0.000125304556
+2025-05-12 02:49:13.119089epoch[122/200] psnrTr:nan lossTr:nan lr:0.000123282706
+2025-05-12 02:49:54.858310epoch[123/200] psnrTr:nan lossTr:nan lr:0.000121271149
+2025-05-12 02:50:36.566376epoch[124/200] psnrTr:nan lossTr:nan lr:0.000119270381
+2025-05-12 02:51:18.303513epoch[125/200] psnrTr:nan lossTr:nan lr:0.000117280896
+2025-05-12 02:52:00.165003epoch[126/200] psnrTr:nan lossTr:nan lr:0.000115303185
+2025-05-12 02:52:40.699526epoch[127/200] psnrTr:nan lossTr:nan lr:0.000113337737
+2025-05-12 02:53:21.483343epoch[128/200] psnrTr:nan lossTr:nan lr:0.000111385035
+2025-05-12 02:54:03.463878epoch[129/200] psnrTr:nan lossTr:nan lr:0.000109445562
+2025-05-12 02:54:45.230400epoch[130/200] psnrTr:nan lossTr:nan lr:0.000107519796
+2025-05-12 02:55:25.642387epoch[131/200] psnrTr:nan lossTr:nan lr:0.000105608212
+2025-05-12 02:56:05.624686epoch[132/200] psnrTr:nan lossTr:nan lr:0.000103711283
+2025-05-12 02:56:47.043235epoch[133/200] psnrTr:nan lossTr:nan lr:0.000101829475
+2025-05-12 02:57:28.595265epoch[134/200] psnrTr:nan lossTr:nan lr:0.000099963254
+2025-05-12 02:58:10.320722epoch[135/200] psnrTr:nan lossTr:nan lr:0.000098113080
+2025-05-12 02:58:51.844655epoch[136/200] psnrTr:nan lossTr:nan lr:0.000096279409
+2025-05-12 02:59:34.031809epoch[137/200] psnrTr:nan lossTr:nan lr:0.000094462694
+2025-05-12 03:00:16.061094epoch[138/200] psnrTr:nan lossTr:nan lr:0.000092663383
+2025-05-12 03:00:58.078515epoch[139/200] psnrTr:nan lossTr:nan lr:0.000090881920
+2025-05-12 03:01:38.530147epoch[140/200] psnrTr:nan lossTr:nan lr:0.000089118744
+2025-05-12 03:02:20.119889epoch[141/200] psnrTr:nan lossTr:nan lr:0.000087374291
+2025-05-12 03:03:01.603852epoch[142/200] psnrTr:nan lossTr:nan lr:0.000085648991
+2025-05-12 03:03:43.144062epoch[143/200] psnrTr:nan lossTr:nan lr:0.000083943270
+2025-05-12 03:04:23.688558epoch[144/200] psnrTr:nan lossTr:nan lr:0.000082257548
+2025-05-12 03:05:04.201057epoch[145/200] psnrTr:nan lossTr:nan lr:0.000080592241
+2025-05-12 03:05:44.516764epoch[146/200] psnrTr:nan lossTr:nan lr:0.000078947761
+2025-05-12 03:06:26.712820epoch[147/200] psnrTr:nan lossTr:nan lr:0.000077324513
+2025-05-12 03:07:07.612463epoch[148/200] psnrTr:nan lossTr:nan lr:0.000075722898
+2025-05-12 03:07:47.315047epoch[149/200] psnrTr:nan lossTr:nan lr:0.000074143311
+2025-05-12 03:08:28.923161epoch[150/200] psnrTr:nan lossTr:nan lr:0.000072586141
+2025-05-12 03:09:10.632919epoch[151/200] psnrTr:nan lossTr:nan lr:0.000071051772
+2025-05-12 03:09:52.360886epoch[152/200] psnrTr:nan lossTr:nan lr:0.000069540585
+2025-05-12 03:10:34.437558epoch[153/200] psnrTr:nan lossTr:nan lr:0.000068052950
+2025-05-12 03:11:16.188466epoch[154/200] psnrTr:nan lossTr:nan lr:0.000066589235
+2025-05-12 03:11:58.140881epoch[155/200] psnrTr:nan lossTr:nan lr:0.000065149802
+2025-05-12 03:12:39.623363epoch[156/200] psnrTr:nan lossTr:nan lr:0.000063735006
+2025-05-12 03:13:21.212058epoch[157/200] psnrTr:nan lossTr:nan lr:0.000062345195
+2025-05-12 03:14:02.132173epoch[158/200] psnrTr:nan lossTr:nan lr:0.000060980712
+2025-05-12 03:14:43.626868epoch[159/200] psnrTr:nan lossTr:nan lr:0.000059641895
+2025-05-12 03:15:25.527916epoch[160/200] psnrTr:nan lossTr:nan lr:0.000058329073
+2025-05-12 03:16:07.209091epoch[161/200] psnrTr:nan lossTr:nan lr:0.000057042571
+2025-05-12 03:16:49.103199epoch[162/200] psnrTr:nan lossTr:nan lr:0.000055782706
+2025-05-12 03:17:30.015544epoch[163/200] psnrTr:nan lossTr:nan lr:0.000054549788
+2025-05-12 03:18:11.730268epoch[164/200] psnrTr:nan lossTr:nan lr:0.000053344122
+2025-05-12 03:18:53.279310epoch[165/200] psnrTr:nan lossTr:nan lr:0.000052166006
+2025-05-12 03:19:35.102627epoch[166/200] psnrTr:nan lossTr:nan lr:0.000051015730
+2025-05-12 03:20:17.010794epoch[167/200] psnrTr:nan lossTr:nan lr:0.000049893578
+2025-05-12 03:20:58.861601epoch[168/200] psnrTr:nan lossTr:nan lr:0.000048799826
+2025-05-12 03:21:40.991788epoch[169/200] psnrTr:nan lossTr:nan lr:0.000047734746
+2025-05-12 03:22:22.556805epoch[170/200] psnrTr:nan lossTr:nan lr:0.000046698598
+2025-05-12 03:23:03.892022epoch[171/200] psnrTr:nan lossTr:nan lr:0.000045691640
+2025-05-12 03:23:45.678945epoch[172/200] psnrTr:nan lossTr:nan lr:0.000044714119
+2025-05-12 03:24:27.621999epoch[173/200] psnrTr:nan lossTr:nan lr:0.000043766277
+2025-05-12 03:25:09.420926epoch[174/200] psnrTr:nan lossTr:nan lr:0.000042848348
+2025-05-12 03:25:50.102275epoch[175/200] psnrTr:nan lossTr:nan lr:0.000041960558
+2025-05-12 03:26:31.607774epoch[176/200] psnrTr:nan lossTr:nan lr:0.000041103126
+2025-05-12 03:27:12.615001epoch[177/200] psnrTr:nan lossTr:nan lr:0.000040276263
+2025-05-12 03:27:54.529733epoch[178/200] psnrTr:nan lossTr:nan lr:0.000039480174
+2025-05-12 03:28:36.023561epoch[179/200] psnrTr:nan lossTr:nan lr:0.000038715056
+2025-05-12 03:29:17.632618epoch[180/200] psnrTr:nan lossTr:nan lr:0.000037981096
+2025-05-12 03:29:59.902822epoch[181/200] psnrTr:nan lossTr:nan lr:0.000037278477
+2025-05-12 03:30:41.098545epoch[182/200] psnrTr:nan lossTr:nan lr:0.000036607370
+2025-05-12 03:31:22.311517epoch[183/200] psnrTr:nan lossTr:nan lr:0.000035967943
+2025-05-12 03:32:03.388200epoch[184/200] psnrTr:nan lossTr:nan lr:0.000035360352
+2025-05-12 03:32:45.398032epoch[185/200] psnrTr:nan lossTr:nan lr:0.000034784749
+2025-05-12 03:33:26.531811epoch[186/200] psnrTr:nan lossTr:nan lr:0.000034241273
+2025-05-12 03:34:06.618239epoch[187/200] psnrTr:nan lossTr:nan lr:0.000033730061
+2025-05-12 03:34:48.183567epoch[188/200] psnrTr:nan lossTr:nan lr:0.000033251237
+2025-05-12 03:35:30.013292epoch[189/200] psnrTr:nan lossTr:nan lr:0.000032804921
+2025-05-12 03:36:11.550088epoch[190/200] psnrTr:nan lossTr:nan lr:0.000032391221
+2025-05-12 03:36:53.341782epoch[191/200] psnrTr:nan lossTr:nan lr:0.000032010241
+2025-05-12 03:37:35.437995epoch[192/200] psnrTr:nan lossTr:nan lr:0.000031662074
+2025-05-12 03:38:16.996468epoch[193/200] psnrTr:nan lossTr:nan lr:0.000031346806
+2025-05-12 03:38:58.917820epoch[194/200] psnrTr:nan lossTr:nan lr:0.000031064515
+2025-05-12 03:39:40.702035epoch[195/200] psnrTr:nan lossTr:nan lr:0.000030815271
+2025-05-12 03:40:22.515563epoch[196/200] psnrTr:nan lossTr:nan lr:0.000030599135
+2025-05-12 03:41:04.308615epoch[197/200] psnrTr:nan lossTr:nan lr:0.000030416160
+2025-05-12 03:41:46.022879epoch[198/200] psnrTr:nan lossTr:nan lr:0.000030266392
+2025-05-12 03:42:27.316724epoch[199/200] psnrTr:nan lossTr:nan lr:0.000030149867
+2025-05-12 03:43:09.405338epoch[200/200] psnrTr:nan lossTr:nan lr:0.000030066614
