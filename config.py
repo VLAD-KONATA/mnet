@@ -46,7 +46,7 @@ learn_arg.add_argument('--gamma', type=float, default='0.5', help='下降速度'
 learn_arg.add_argument('--batch_size', type=int, default=6)
 learn_arg.add_argument('--one_batch_n_sample', type=int, default=1, help='smapling n times of each volume')
 learn_arg.add_argument('--start_epoch', type=int, default=0)
-learn_arg.add_argument('--max_epoch', type=int, default=500)
+learn_arg.add_argument('--max_epoch', type=int, default=50)
 learn_arg.add_argument('--warmup_epoch', type=float, default=0.05, help='warm up epoch ratio')
 
 

@@ -46,7 +46,7 @@ np.random.seed(GLOBAL_SEED)
 torch.manual_seed(GLOBAL_SEED)
 torch.cuda.manual_seed(GLOBAL_SEED)
 torch.cuda.manual_seed_all(GLOBAL_SEED)
-student=False
+student=True
 
 args.ckpt_dir = 'experiments/'+args.model+'/'+args.ckpt_dir
 os.makedirs(args.ckpt_dir,exist_ok=True)
@@ -63,7 +63,7 @@ if student:
     smodel = select_model(args)
     # model
     tmodel = select_tmodel(args)
-    checkpoint = torch.load('/home/konata/Git/mnet/experiments/mamba_unet_multi/IXI_x2_2x4b/pth/0500.pth', map_location=torch.device('cpu'))
+    checkpoint = torch.load('/home/konata/Git/mnet/experiments/mamba_unet_dist/IXI_x2_2x4b/pth/0500.pth', map_location=torch.device('cpu'))
     tmodel.load_state_dict(checkpoint['state_dict'])
     smodel = smodel.cuda()
 else:
@@ -87,6 +87,7 @@ scheduler = optim.select_scheduler(args,optimizer)
 #### loss ####
 hard_loss = nn.L1Loss()
 soft_loss = nn.KLDivLoss(reduction="batchmean")
+l = nn.SmoothL1Loss(reduction="mean")
 #soft_loss = LaplacianLoss()
 loss_function = Select_Loss(args).cuda()
 
@@ -137,13 +138,13 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
 
                     # 计算hard_loss
                     student_hard_loss = hard_loss(ssr,gt)
-
+                    my_loss = l(smiddle, tmiddle)
                     # chatgpt版Loss
                     soft_student_outputs = F.log_softmax(ssr / temp, dim=1)
                     soft_teacher_outputs = F.softmax(tsr/temp,dim=1)
 
                     ditillation_loss = soft_loss(soft_student_outputs,soft_teacher_outputs)
-                    loss = alpha * student_hard_loss + (1-alpha) * temp * temp * ditillation_loss
+                    loss = alpha * student_hard_loss + (1-alpha) * temp * temp * ditillation_loss+my_loss
 
                     scaler.scale(loss).backward()
                     scaler.step(optimizer)
