@@ -75,7 +75,10 @@ else:
 tmodel = tmodel.cuda()
 
 #### optim ####
-optimizer = torch.optim.Adam(smodel.parameters(), lr=args.lr)
+if student:
+    optimizer = torch.optim.Adam(smodel.parameters(), lr=args.lr)
+else:
+    optimizer = optim.select_optim(args,tmodel)
 # optimizer = torch.optim.Adam(model.parameters(),lr=args.lr, betas=(args.beta1, args.beta2), eps=args.eps)
 scheduler = optim.select_scheduler(args,optimizer)
 
@@ -103,7 +106,10 @@ if args.amp:
 temp=7
 alpha=0.3
 
-smodel.train()
+if student:
+    smodel.train()
+else:
+    tmodel.train()
 for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
     loss_epoch = 0
     psnr_epoch = 0
@@ -152,9 +158,8 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
         else:
             if args.amp:
                 with autocast():
-                    with torch.no_grad():
-                        tsr,tmiddle = tmodel(lr,False)
-                    loss = loss_function(sr,gt)
+                    tsr,tmiddle = tmodel(lr,student)
+                    loss = loss_function(tsr,gt)
                     scaler.scale(loss).backward()
                     scaler.step(optimizer)
                     scaler.update()
@@ -168,7 +173,11 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
 
         psnr_iter = 0
         for bz in range(gt.shape[0]):
-            psnr_iter += calc_psnr(gt[bz, :, :, :],ssr[bz, :, :, :]).item()
+            if student:
+                psnr_iter += calc_psnr(gt[bz, :, :, :],ssr[bz, :, :, :]).item()
+            else:
+                psnr_iter += calc_psnr(gt[bz, :, :, :],tsr[bz, :, :, :]).item()
+
         psnr_iter /= (bz+1)  
 
         #### log ####    

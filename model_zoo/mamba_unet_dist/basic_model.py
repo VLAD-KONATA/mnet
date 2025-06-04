@@ -112,7 +112,7 @@ class CrossViewBlock(nn.Module):
     
 
 class newmodel(nn.Module):
-    def __init__(self,args=None,conv=default_conv,student=True):
+    def __init__(self,args=None,conv=default_conv,student=False):
         super(newmodel, self).__init__()
         self.args = args
         self.student=student
@@ -164,7 +164,7 @@ class newmodel(nn.Module):
                 nn.Conv2d(32, out_slice, kernel_size=1)
             )
         
-    def forward(self, x,student=True):
+    def forward(self, x,student=False):
         #print('model_name=mamba_unet_multi')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
@@ -226,8 +226,8 @@ if __name__ == '__main__':
     x=torch.randn(1,256,256,4).cuda(gpy_id)
     from torchsummary import summary
     from thop import profile
-    #summary(model,(256, 256, 4))
-    #pred=model(x)
+    summary(model,(256, 256, 4))
+    pred=model(x)
     #print(pred.shape)
-    flops,params=profile(model,(x,))
-    print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+    #flops,params=profile(model,(x,))
+    #print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
