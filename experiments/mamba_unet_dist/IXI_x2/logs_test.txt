@@ -223,3 +223,19 @@ checkpoint:experiments/mamba_unet_dist/IXI_x2/pth/0500.pth
 [83 / 100] NAME:('IXI290-IOP-0874-T2',) PSNR:38.756431579589844 x_y_ssim:0.9810 x_z_ssim:0.9811 y_z_ssim:0.9818 time:2.99 
 [84 / 100] NAME:('IXI568-HH-2607-T2',) PSNR:45.656402587890625 x_y_ssim:0.9879 x_z_ssim:0.9874 y_z_ssim:0.9879 time:2.96 
 [85 / 100] NAME:('IXI423-IOP-0974-T2',) PSNR:38.58037567138672 x_y_ssim:0.9747 x_z_ssim:0.9741 y_z_ssim:0.9748 time:3.78 
+[86 / 100] NAME:('IXI456-Guys-1019-T2',) PSNR:54.110694885253906 x_y_ssim:0.9974 x_z_ssim:0.9974 y_z_ssim:0.9974 time:3.73 
+[87 / 100] NAME:('IXI354-HH-2024-T2',) PSNR:46.531280517578125 x_y_ssim:0.9904 x_z_ssim:0.9898 y_z_ssim:0.9900 time:3.52 
+[88 / 100] NAME:('IXI307-IOP-0872-T2',) PSNR:38.18223571777344 x_y_ssim:0.9752 x_z_ssim:0.9742 y_z_ssim:0.9755 time:3.79 
+[89 / 100] NAME:('IXI461-Guys-0998-T2',) PSNR:53.57673645019531 x_y_ssim:0.9970 x_z_ssim:0.9970 y_z_ssim:0.9971 time:3.66 
+[90 / 100] NAME:('IXI572-HH-2605-T2',) PSNR:43.95673370361328 x_y_ssim:0.9854 x_z_ssim:0.9842 y_z_ssim:0.9846 time:3.63 
+[91 / 100] NAME:('IXI057-HH-1342-T2',) PSNR:48.0501708984375 x_y_ssim:0.9952 x_z_ssim:0.9948 y_z_ssim:0.9953 time:3.75 
+[92 / 100] NAME:('IXI361-Guys-0913-T2',) PSNR:54.59577941894531 x_y_ssim:0.9976 x_z_ssim:0.9975 y_z_ssim:0.9976 time:3.66 
+[93 / 100] NAME:('IXI492-Guys-1022-T2',) PSNR:52.92062759399414 x_y_ssim:0.9967 x_z_ssim:0.9966 y_z_ssim:0.9967 time:3.63 
+[94 / 100] NAME:('IXI244-Guys-0841-T2',) PSNR:54.031646728515625 x_y_ssim:0.9971 x_z_ssim:0.9972 y_z_ssim:0.9972 time:3.33 
+[95 / 100] NAME:('IXI458-Guys-0993-T2',) PSNR:52.94027328491211 x_y_ssim:0.9966 x_z_ssim:0.9965 y_z_ssim:0.9966 time:3.57 
+[96 / 100] NAME:('IXI484-HH-2179-T2',) PSNR:52.77376174926758 x_y_ssim:0.9967 x_z_ssim:0.9968 y_z_ssim:0.9969 time:3.51 
+[97 / 100] NAME:('IXI288-Guys-0879-T2',) PSNR:53.07732391357422 x_y_ssim:0.9967 x_z_ssim:0.9966 y_z_ssim:0.9967 time:3.48 
+[98 / 100] NAME:('IXI139-Guys-0815-T2',) PSNR:53.77705383300781 x_y_ssim:0.9971 x_z_ssim:0.9970 y_z_ssim:0.9971 time:3.59 
+[99 / 100] NAME:('IXI327-HH-1999-T2',) PSNR:53.48967742919922 x_y_ssim:0.9976 x_z_ssim:0.9976 y_z_ssim:0.9976 time:3.68 
+[100 / 100] NAME:('IXI438-HH-2155-T2',) PSNR:50.1141357421875 x_y_ssim:0.9947 x_z_ssim:0.9946 y_z_ssim:0.9948 time:3.63 
+PSNR: 49.59593338012695 x_y_ssim: 0.992745 x_z_ssim: 0.992571 y_z_ssim: 0.992859
