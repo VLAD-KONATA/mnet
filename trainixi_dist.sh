@@ -1,1 +1,2 @@
 python -W ignore main_dist.py --upscale 2 --lr_slice_patch 4 --traindata_path /home/konata/Dataset/IXI-T2/I3Net/slice --testdata_path /home/konata/Dataset/IXI-T2/I3Net/imagesTs --ckpt_dir IXI_x2_2x4b --batch_size 4 --gpu_id '0' --model 'mamba_unet_dist' --num_workers 4
+python -W ignore main_dist.py --upscale 2 --lr_slice_patch 4 --traindata_path /home/konata/Dataset/IXI-T2/I3Net/slice --testdata_path /home/konata/Dataset/IXI-T2/I3Net/imagesTs --ckpt_dir IXI_x2 --batch_size 4 --gpu_id '0' --model 'mamba_unet_dist' --num_workers 4

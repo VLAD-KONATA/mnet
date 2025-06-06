@@ -10,8 +10,8 @@ from mamba_ssm import Mamba
 from .unet import UNet
 
 
-def make_model(args):
-    return newmodel(args)
+def make_model(args,student,conv):
+    return newmodel(args,student,conv)
 
 #####################################################################
 def default_conv(in_channelss, out_channels, kernel_size, bias=True):
@@ -112,7 +112,7 @@ class CrossViewBlock(nn.Module):
     
 
 class newmodel(nn.Module):
-    def __init__(self,args=None,conv=default_conv,student=False):
+    def __init__(self,args=None,student=True,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
         self.student=student
@@ -124,7 +124,6 @@ class newmodel(nn.Module):
             blocks=4
             cblayers=3
             depth=2
-            
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -136,6 +135,7 @@ class newmodel(nn.Module):
         head_num = args.head_num
         win_num_sqrt = args.win_num_sqrt
         window_size = args.window_size
+        conv=default_conv
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
@@ -169,7 +169,7 @@ class newmodel(nn.Module):
         x = x.permute(0,3,1,2)
         x = x.contiguous()
         x_head = self.head(x) 
-        
+        student=self.student
         res = x_head
 
         align_list = []
@@ -182,9 +182,9 @@ class newmodel(nn.Module):
             id_list=[1,3]
         for id,layer in enumerate(self.body):
             res = layer(res)
-            if not(student) and id==1:
+            if not(self.student) and id==1:
                 res_middle=self.aux_s(res)
-            if student and id==0:
+            if self.student and id==0:
                 res_middle=self.aux_s(res)
             if id in id_list:
                 res = self.alignment[id//2+1](res) + res

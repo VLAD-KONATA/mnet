@@ -10,11 +10,11 @@ def args_add_additinoal_attr(args,json_path):
             continue
         setattr(args,key,value)
 
-def select_model(args):
+def select_model(args,student,conv=None):
     opt_path = f'opt/{args.model}.json'
     args_add_additinoal_attr(args, opt_path)
     module = import_module(f'model_zoo.{args.model.lower()}.basic_model')
-    model = module.make_model(args)
+    model = module.make_model(args,student,conv)
     return model
 
 

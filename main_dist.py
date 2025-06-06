@@ -32,11 +32,11 @@ def args_add_additinoal_attr(args,json_path):
             continue
         setattr(args,key,value)
 
-def select_tmodel(args):
-    opt_path = f'opt/{args.model}_multi.json'
+def select_tmodel(args,student,conv=None):
+    opt_path = f'opt/{args.model}.json'
     args_add_additinoal_attr(args, opt_path)
     module = import_module(f'model_zoo.{args.model.lower()}.basic_model')
-    model = module.make_model(args)
+    model = module.make_model(args,student,conv)
     return model
 ####################################################################
 # seed
@@ -60,14 +60,14 @@ trainset = trainSet(data_root=args.traindata_path,args=args)
 dataloader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,\
                 shuffle=False,num_workers=args.num_workers, pin_memory=False)
 if student:
-    smodel = select_model(args)
+    smodel = select_model(args,student)
     # model
-    tmodel = select_tmodel(args)
+    tmodel = select_tmodel(args,student=False)
     checkpoint = torch.load('/home/konata/Git/mnet/experiments/mamba_unet_dist/IXI_x2_2x4b/pth/0500.pth', map_location=torch.device('cpu'))
     tmodel.load_state_dict(checkpoint['state_dict'])
     smodel = smodel.cuda()
 else:
-    tmodel=select_model(args)
+    tmodel=select_model(args,student)
 
 
 
@@ -223,10 +223,14 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
     if epoch >int(0.99*args.max_epoch):
         os.makedirs(args.ckpt_dir+'/pth',exist_ok=True)
         os.makedirs(args.ckpt_dir+'/keys',exist_ok=True)
+        if student:
+            model=smodel
+        else:
+            model=tmodel
         try:
-            torch.save({'epoch': epoch, 'state_dict': smodel.module.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
+            torch.save({'epoch': epoch, 'state_dict': model.module.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
         except:
-            torch.save({'epoch': epoch, 'state_dict': smodel.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
+            torch.save({'epoch': epoch, 'state_dict': model.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
 
 
 # val_opt = True
