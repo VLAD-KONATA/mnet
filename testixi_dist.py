@@ -20,7 +20,7 @@ def main():
         f.write('testdata:'+args.testdata_path+'\n')
         f.write('checkpoint:'+args.ckpt+'\n')
 
-    model = select_model(args)
+    model = select_model(args,True)
     checkpoint = torch.load(args.ckpt, map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['state_dict'])
     print(f'load:{args.ckpt}')
