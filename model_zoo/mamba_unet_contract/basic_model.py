@@ -8,6 +8,7 @@ from einops.layers.torch import Rearrange
 from mamba_ssm import Mamba
 #from unet import UNet
 from .unet import UNet
+from .new_unet import DetailEnhancedUNet
 
 def make_model(args):
     return newmodel(args)
@@ -28,7 +29,7 @@ class ContrastAwareModule(nn.Module):
             nn.Conv2d(n_feat//4, 2, 1),
             nn.Sigmoid()
         )
-        self.adjuster = nn.Conv2d(2*n_feat, n_feat, 1)
+        self.adjuster = nn.Conv2d(2+n_feat, n_feat, 1)
 
     def forward(self, x):
         contrast = self.contrast_estimator(x)  # [B,2,1,1]
@@ -40,7 +41,7 @@ class I2Block(nn.Module):
         self, conv, n_feat, kernel_size,
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
-        self.contrast_module = ContrastAwareModule(n_feat)
+        #self.contrast_module = ContrastAwareModule(n_feat)
         inter_slice_branch = [
             nn.PixelUnshuffle(2),
             nn.Conv2d(4*n_feat,4*n_feat,3,1,1),
@@ -51,7 +52,7 @@ class I2Block(nn.Module):
         ]
         self.inter_slice_branch = nn.Sequential(*inter_slice_branch)
         self.res_scale = res_scale
-        self.unet=UNet(64,64)
+        self.unet=DetailEnhancedUNet(64,64)
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
     d_model=256, # Model dimension d_model
@@ -62,11 +63,11 @@ class I2Block(nn.Module):
 
     def forward(self, x):
         
-        xc = self.contrast_module(x)
-        x_u=self.unet(xc)
+        #xc = self.contrast_module(x)
+        x_u=self.unet(x)
        # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
 
-        mamba_x=einops.rearrange(xc,'b d h w -> (b d) h w')
+        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])

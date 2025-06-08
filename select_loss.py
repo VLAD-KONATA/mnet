@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from util_evaluation import calc_ssim
+from util_evaluation import SSIM
 import torch.nn.functional as F
 
 class Select_Loss(nn.Module):
@@ -19,7 +19,7 @@ class Select_Loss(nn.Module):
             mseloss=torch.mean(self.mseloss(sr,gt))
             loss=mseloss+ self.loss_compact * compactness_loss + self.loss_separate * separateness_loss
         else:
-            if False:
+            if True:
                 l1loss = self.l1loss(sr,gt)
                 loss = l1loss 
             else:
@@ -30,13 +30,23 @@ class MultiContrastLoss(nn.Module):
     def __init__(self):
         super().__init__()
         self.l1_loss = nn.L1Loss()
-        self.ssim_loss = calc_ssim()  # 需要实现或导入SSIM
+        self.ssim_loss=SSIM()
         
-    def forward(self, pred, gt, features):
+    def forward(self, pred, gt):
         # 基础L1和SSIM损失
         l1 = self.l1_loss(pred, gt)
-        ssim = 1 - self.ssim_loss(pred, gt)
-        
+        preds =pred.permute(0,3,1,2)
+        preds = preds.contiguous()
+        gts = gt.permute(0,3,1,2)
+        gts = gts.contiguous()
+        ssim=0
+        '''
+        for i in range(1,7,2):
+                print(preds[:,i].unsqueeze(1).shape,gts[:,i].shape)
+                ssim+=1-self.ssim_loss(preds[:,i].unsqueeze(1), gts[:,i].unsqueeze(1))
+        ssim = ssim/3
+        '''
+        ssim+=1-self.ssim_loss(preds,gts)
         # 对比度相关损失
         pred_contrast = self.calc_contrast(pred)
         gt_contrast = self.calc_contrast(gt)
