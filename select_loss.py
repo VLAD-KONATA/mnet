@@ -19,7 +19,7 @@ class Select_Loss(nn.Module):
             mseloss=torch.mean(self.mseloss(sr,gt))
             loss=mseloss+ self.loss_compact * compactness_loss + self.loss_separate * separateness_loss
         else:
-            if False:
+            if True:
                 l1loss = self.l1loss(sr,gt)
                 loss = l1loss 
             else:
