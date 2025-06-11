@@ -42,15 +42,7 @@ class I2Block(nn.Module):
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
         self.contrast_module = ContrastAwareModule(n_feat)
-        inter_slice_branch = [
-            nn.PixelUnshuffle(2),
-            nn.Conv2d(4*n_feat,4*n_feat,3,1,1),
-            nn.ReLU(),
-            nn.Conv2d(4*n_feat,4*n_feat,3,1,1), # +
-            nn.PixelShuffle(2), # +
-            nn.Conv2d(n_feat,n_feat,1,1,0)
-        ]
-        self.inter_slice_branch = nn.Sequential(*inter_slice_branch)
+
         self.res_scale = res_scale
         self.unet=UNet(64,64)
         self.mamba= Mamba(
@@ -65,16 +57,13 @@ class I2Block(nn.Module):
         
         xc = self.contrast_module(x)
         x_u=self.unet(xc)
-       # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
 
         mamba_x=einops.rearrange(xc,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
-        #out = x_inter + x_mamba + x
         out = x_u + x_mamba + xc
 
-        #out=x_u+x
         return out
 
 class I2Group(nn.Module):

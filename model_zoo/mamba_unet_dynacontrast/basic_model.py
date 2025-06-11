@@ -19,6 +19,22 @@ def default_conv(in_channelss, out_channels, kernel_size, bias=True):
         in_channelss, out_channels, kernel_size,
         padding=(kernel_size // 2), bias=bias)
     
+class DynamicNormalization(nn.Module):
+    def __init__(self, eps=1e-5):
+        super().__init__()
+        self.eps = eps
+        # 可学习的对比度调节参数
+        self.alpha = nn.Parameter(torch.ones(1))
+        self.beta = nn.Parameter(torch.zeros(1))
+
+    def forward(self, x):
+        # 基于当前batch的统计量做归一化
+        mean = x.mean(dim=[2,3], keepdim=True)
+        std = x.std(dim=[2,3], keepdim=True) + self.eps
+        x_norm = (x - mean) / std
+        # 保留原始对比度信息
+        return self.alpha * x_norm + self.beta * x
+    
 class ContrastAwareModule(nn.Module):
     def __init__(self, n_feat):
         super().__init__()
@@ -42,15 +58,7 @@ class I2Block(nn.Module):
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
         self.contrast_module = ContrastAwareModule(n_feat)
-        inter_slice_branch = [
-            nn.PixelUnshuffle(2),
-            nn.Conv2d(4*n_feat,4*n_feat,3,1,1),
-            nn.ReLU(),
-            nn.Conv2d(4*n_feat,4*n_feat,3,1,1), # +
-            nn.PixelShuffle(2), # +
-            nn.Conv2d(n_feat,n_feat,1,1,0)
-        ]
-        self.inter_slice_branch = nn.Sequential(*inter_slice_branch)
+
         self.res_scale = res_scale
         self.unet=DetailEnhancedUNet(64,64)
         self.mamba= Mamba(
@@ -63,16 +71,14 @@ class I2Block(nn.Module):
 
     def forward(self, x):
         
-        #xc = self.contrast_module(x)
-        x_u=self.unet(x)
-        #x_inter = self.inter_slice_branch(x).mul(self.res_scale)
+        xc = self.contrast_module(x)
+        x_u=self.unet(xc)
 
-        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
+        mamba_x=einops.rearrange(xc,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
-        x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
-        #out = x_inter + x_mamba + x
-        out = x_u + x_mamba + x
+        x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
+        out = x_u + x_mamba + xc
 
         #out=x_u+x
         return out
@@ -152,10 +158,7 @@ class newmodel(nn.Module):
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
-        self.preprocess = nn.Sequential(
-            nn.InstanceNorm2d(in_slice, affine=True),
-            nn.Conv2d(in_slice, in_slice, 1)  # 可学习的对比度调整
-        )
+        self.dynamic_norm = DynamicNormalization()
         modules_body = [
             I2Group(
                 conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
@@ -176,7 +179,7 @@ class newmodel(nn.Module):
         #print('model_name=mamba_unet')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
-        #x = self.preprocess(x)  # 添加预处理
+        x = self.dynamic_norm(x)  # 添加预处理
         x_head = self.head(x) 
         
         res = x_head
