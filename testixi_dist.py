@@ -20,7 +20,7 @@ def main():
         f.write('testdata:'+args.testdata_path+'\n')
         f.write('checkpoint:'+args.ckpt+'\n')
 
-    model = select_model(args,True)
+    model = select_model(args)
     checkpoint = torch.load(args.ckpt, map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['state_dict'])
     print(f'load:{args.ckpt}')
@@ -66,7 +66,7 @@ def main():
                 if mnad:
                     tmp_sr, _, _, m_items, softmax_score_query, softmax_score_memory, separateness_loss = model(tmp_lr,m_items,False)
                 else:
-                    tmp_sr,middle = model(tmp_lr,False)
+                    tmp_sr,middle = model(tmp_lr)
 
 
             tmp_sr = torch.clamp(tmp_sr.squeeze(0),0,1).cpu()

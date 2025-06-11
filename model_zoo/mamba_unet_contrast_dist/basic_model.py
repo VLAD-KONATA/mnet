@@ -8,7 +8,7 @@ from einops.layers.torch import Rearrange
 from mamba_ssm import Mamba
 #from unet import UNet
 from .unet import UNet
-
+#from .new_unet import DetailEnhancedUNet
 
 def make_model(args):
     return newmodel(args)
@@ -18,13 +18,30 @@ def default_conv(in_channelss, out_channels, kernel_size, bias=True):
     return nn.Conv2d(
         in_channelss, out_channels, kernel_size,
         padding=(kernel_size // 2), bias=bias)
+    
+class ContrastAwareModule(nn.Module):
+    def __init__(self, n_feat):
+        super().__init__()
+        self.contrast_estimator = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(n_feat, n_feat//4, 1),
+            nn.ReLU(),
+            nn.Conv2d(n_feat//4, 2, 1),
+            nn.Sigmoid()
+        )
+        self.adjuster = nn.Conv2d(2+n_feat, n_feat, 1)
 
+    def forward(self, x):
+        contrast = self.contrast_estimator(x)  # [B,2,1,1]
+        contrast_feat = contrast.expand(-1, -1, x.size(2), x.size(3))
+        return self.adjuster(torch.cat([x, contrast_feat], dim=1))
 
 class I2Block(nn.Module):
     def __init__(
         self, conv, n_feat, kernel_size,
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
+        self.contrast_module = ContrastAwareModule(n_feat)
         inter_slice_branch = [
             nn.PixelUnshuffle(2),
             nn.Conv2d(4*n_feat,4*n_feat,3,1,1),
@@ -45,14 +62,19 @@ class I2Block(nn.Module):
     )
 
     def forward(self, x):
-        x_u=self.unet(x)
+        
+        xc = self.contrast_module(x)
+        x_u=self.unet(xc)
        # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
-        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
+
+        mamba_x=einops.rearrange(xc,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
         #out = x_inter + x_mamba + x
-        out = x_u + x_mamba + x
+        out = x_u + x_mamba + xc
+
+        #out=x_u+x
         return out
 
 class I2Group(nn.Module):
@@ -115,14 +137,7 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        '''
-        blocks=1
-        cblayers=2
-        depth=1
-        '''
-        blocks=4
-        cblayers=3
-        depth=2
+        
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -134,27 +149,22 @@ class newmodel(nn.Module):
         head_num = args.head_num
         win_num_sqrt = args.win_num_sqrt
         window_size = args.window_size
-        conv=default_conv
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
-        
+        self.preprocess = nn.Sequential(
+            nn.InstanceNorm2d(in_slice, affine=True),
+            nn.Conv2d(in_slice, in_slice, 1)  # 可学习的对比度调整
+        )
         modules_body = [
             I2Group(
-                conv, n_depth=depth,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
-                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(blocks)]
+                conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
+                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(2//2)]
         self.body = nn.ModuleList(modules_body)
         
-        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(cblayers)])
+        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(2)])
 
-        self.fuse_align = nn.Conv2d(cblayers*n_feats,n_feats,1,1,0)
-
-        modules_tail = [
-            conv(n_feats, n_feats, kernel_size),
-            nn.ReLU(),
-            conv(n_feats,out_slice,kernel_size)]
-        self.tail = nn.Sequential(*modules_tail)
-        
+        self.fuse_align = nn.Conv2d(2*n_feats,n_feats,1,1,0)
         self.aux_s = nn.Sequential(
                 nn.Conv2d(64, 32, kernel_size=3, padding=1, bias=False),
                 nn.BatchNorm2d(32),
@@ -162,26 +172,30 @@ class newmodel(nn.Module):
                 nn.Dropout2d(p=0.1),
                 nn.Conv2d(32, out_slice, kernel_size=1)
             )
+        modules_tail = [
+            conv(n_feats, n_feats, kernel_size),
+            nn.ReLU(),
+            conv(n_feats,out_slice,kernel_size)]
+        self.tail = nn.Sequential(*modules_tail)
         
     def forward(self, x):
-        #print('model_name=mamba_unet_multi')
+        #print('model_name=mamba_unet')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
+        #x = self.preprocess(x)  # 添加预处理
         x_head = self.head(x) 
+        
         res = x_head
 
         align_list = []
         res = self.alignment[0](res)+res
         align_list.append(res)
-        id_list=[]
-        #id_list=[0]
 
-        id_list=[1,3]
         for id,layer in enumerate(self.body):
             res = layer(res)
-            if  id==1:
+            if id==0:
                 res_middle=self.aux_s(res)
-            if id in id_list:
+            if id in [0,3,7]:
                 res = self.alignment[id//2+1](res) + res
                 align_list.append(res)
 
@@ -195,8 +209,6 @@ class newmodel(nn.Module):
         out = out.permute(0,2,3,1).contiguous()
         
         return out,res_middle
-
-
 
 
 if __name__ == '__main__':
@@ -220,9 +232,9 @@ if __name__ == '__main__':
     #y = torch.ones(1,args.n_size,args.n_size,args.hr_slice_patch).cuda(gpy_id)
     x=torch.randn(1,256,256,4).cuda(gpy_id)
     from torchsummary import summary
-    from thop import profile
-    summary(model,(256, 256, 4))
-    pred=model(x)
+    #summary(model,(256, 256, 4))
+    #pred=model(x)
     #print(pred.shape)
-    #flops,params=profile(model,(x,))
-    #print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+    from thop import profile
+    flops,params=profile(model,(x,))
+    print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))

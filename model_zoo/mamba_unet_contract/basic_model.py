@@ -41,7 +41,7 @@ class I2Block(nn.Module):
         self, conv, n_feat, kernel_size,
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
-        #self.contrast_module = ContrastAwareModule(n_feat)
+        self.contrast_module = ContrastAwareModule(n_feat)
         inter_slice_branch = [
             nn.PixelUnshuffle(2),
             nn.Conv2d(4*n_feat,4*n_feat,3,1,1),
@@ -65,7 +65,7 @@ class I2Block(nn.Module):
         
         #xc = self.contrast_module(x)
         x_u=self.unet(x)
-       # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
+        #x_inter = self.inter_slice_branch(x).mul(self.res_scale)
 
         mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
@@ -176,7 +176,7 @@ class newmodel(nn.Module):
         #print('model_name=mamba_unet')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
-        x = self.preprocess(x)  # 添加预处理
+        #x = self.preprocess(x)  # 添加预处理
         x_head = self.head(x) 
         
         res = x_head

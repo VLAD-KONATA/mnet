@@ -62,6 +62,7 @@ scheduler = optim.select_scheduler(args,optimizer)
 loss_function = Select_Loss(args).cuda()
 
 
+
 ########################### train ###################################
 # log
 with open(args.ckpt_dir + '/logs.txt',mode='a+') as f:
@@ -102,7 +103,8 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
                     sr, _, _, m_items, softmax_score_query, softmax_score_memory, separateness_loss, compactness_loss = model(lr,m_items,True)
                     loss_iter = loss_function(sr,gt,separateness_loss, compactness_loss)
                 else:
-                    sr=model(lr,True)
+                    #sr=model(lr,True)
+                    sr,middle=model(lr)
                     loss_iter = loss_function(sr,gt)
 
                 scaler.scale(loss_iter).backward()
@@ -159,7 +161,8 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
     with open(args.ckpt_dir + '/logs.txt',mode='a+') as f:
         f.write('\n'+now+log)
 
-    if epoch >int(0.99*args.max_epoch):
+    if epoch%100==0 or epoch==50:
+    #if epoch >int(0.99*args.max_epoch)or epoch==50:
         os.makedirs(args.ckpt_dir+'/pth',exist_ok=True)
         os.makedirs(args.ckpt_dir+'/keys',exist_ok=True)
         try:
