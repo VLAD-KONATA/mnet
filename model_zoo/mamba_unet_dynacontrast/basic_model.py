@@ -8,7 +8,8 @@ from einops.layers.torch import Rearrange
 from mamba_ssm import Mamba
 #from unet import UNet
 from .unet import UNet
-from .new_unet import DetailEnhancedUNet
+#from catanet_arch import TAB
+from .catanet_arch import TAB
 
 def make_model(args):
     return newmodel(args)
@@ -19,21 +20,7 @@ def default_conv(in_channelss, out_channels, kernel_size, bias=True):
         in_channelss, out_channels, kernel_size,
         padding=(kernel_size // 2), bias=bias)
     
-class DynamicNormalization(nn.Module):
-    def __init__(self, eps=1e-5):
-        super().__init__()
-        self.eps = eps
-        # 可学习的对比度调节参数
-        self.alpha = nn.Parameter(torch.ones(1))
-        self.beta = nn.Parameter(torch.zeros(1))
 
-    def forward(self, x):
-        # 基于当前batch的统计量做归一化
-        mean = x.mean(dim=[2,3], keepdim=True)
-        std = x.std(dim=[2,3], keepdim=True) + self.eps
-        x_norm = (x - mean) / std
-        # 保留原始对比度信息
-        return self.alpha * x_norm + self.beta * x
     
 class ContrastAwareModule(nn.Module):
     def __init__(self, n_feat):
@@ -58,9 +45,9 @@ class I2Block(nn.Module):
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
         self.contrast_module = ContrastAwareModule(n_feat)
-
+        self.tab=TAB(n_feat)
         self.res_scale = res_scale
-        self.unet=DetailEnhancedUNet(64,64)
+        self.unet=UNet(64,64)
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
     d_model=256, # Model dimension d_model
@@ -71,15 +58,15 @@ class I2Block(nn.Module):
 
     def forward(self, x):
         
-        xc = self.contrast_module(x)
-        x_u=self.unet(xc)
-
-        mamba_x=einops.rearrange(xc,'b d h w -> (b d) h w')
+        #xc = self.contrast_module(x)
+        x=self.tab(x)
+        x_u=self.unet(x)
+        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
-        out = x_u + x_mamba + xc
-
+        
+        out = x_u + x_mamba + x
         #out=x_u+x
         return out
 
@@ -103,8 +90,7 @@ class CrossViewBlock(nn.Module):
     def __init__(self,n_feat):
         super().__init__()
 
-        #self.norm = nn.LayerNorm(n_feat)
-        self.norm = DynamicNormalization()
+        self.norm = nn.LayerNorm(n_feat)
 
         self.conv_sag = nn.Sequential(
             nn.Conv2d(n_feat,n_feat,1,1,0),
@@ -159,7 +145,6 @@ class newmodel(nn.Module):
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
-        self.dynamic_norm = DynamicNormalization()
         modules_body = [
             I2Group(
                 conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
@@ -226,10 +211,12 @@ if __name__ == '__main__':
     #x = torch.ones(1,args.n_size,args.n_size,args.lr_slice_patch).cuda(gpy_id)
     #y = torch.ones(1,args.n_size,args.n_size,args.hr_slice_patch).cuda(gpy_id)
     x=torch.randn(1,256,256,4).cuda(gpy_id)
-    from torchsummary import summary
-    #summary(model,(256, 256, 4))
     #pred=model(x)
     #print(pred.shape)
-    from thop import profile
-    flops,params=profile(model,(x,))
-    print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+    
+    #from torchsummary import summary
+    #summary(model,(256, 256, 4))
+    
+    #from thop import profile
+    #flops,params=profile(model,(x,))
+    #print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
