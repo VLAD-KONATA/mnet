@@ -1,0 +1,1 @@
+python -W ignore main_dist.py --upscale 2 --lr_slice_patch 4 --traindata_path /home/konata/Dataset/IXI-T2/TAO_CT/I3Net/slice --testdata_path /home/konata/Dataset/IXI-T2/TAO_CT/I3Net/imagesTs --ckpt_dir TAOCT_x2_dist --batch_size 4 --gpu_id '0' --model 'mamba_unet_dist' --num_workers 4

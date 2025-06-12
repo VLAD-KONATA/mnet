@@ -103,7 +103,8 @@ class CrossViewBlock(nn.Module):
     def __init__(self,n_feat):
         super().__init__()
 
-        self.norm = nn.LayerNorm(n_feat)
+        #self.norm = nn.LayerNorm(n_feat)
+        self.norm = DynamicNormalization()
 
         self.conv_sag = nn.Sequential(
             nn.Conv2d(n_feat,n_feat,1,1,0),
@@ -179,7 +180,6 @@ class newmodel(nn.Module):
         #print('model_name=mamba_unet')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
-        x = self.dynamic_norm(x)  # 添加预处理
         x_head = self.head(x) 
         
         res = x_head

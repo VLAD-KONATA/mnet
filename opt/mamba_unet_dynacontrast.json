@@ -1,5 +1,5 @@
 {
-    "model"      : "mamba_unet_contract",
+    "model"      : "mamba_unet_dynacontrast",
 
     "kernel_size": 3,
     "n_feats": 64,

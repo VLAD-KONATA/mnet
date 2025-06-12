@@ -1,0 +1,83 @@
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : mamba_unet_dynacontrast
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/mamba_unet_dynacontrast/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+
+2025-06-12 00:51:08.615655epoch[1/500] psnrTr:2.806390 lossTr:0.437847733498 lr:0.000003000000
+2025-06-12 00:51:40.139122epoch[2/500] psnrTr:2.828893 lossTr:0.428270459175 lr:0.000003000000
+2025-06-12 00:52:20.771403epoch[3/500] psnrTr:2.846868 lossTr:0.426401287317 lr:0.000014880000
+2025-06-12 00:52:52.625708epoch[4/500] psnrTr:2.853639 lossTr:0.416813194752 lr:0.000026760000
+2025-06-12 00:53:24.478318epoch[5/500] psnrTr:2.881404 lossTr:0.416152149439 lr:0.000038640000START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : mamba_unet_dynacontrast
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/mamba_unet_dynacontrast/IXI_x2
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16

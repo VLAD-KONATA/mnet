@@ -28,6 +28,7 @@ torch.manual_seed(GLOBAL_SEED)
 torch.cuda.manual_seed(GLOBAL_SEED)
 torch.cuda.manual_seed_all(GLOBAL_SEED)
 mnad=False
+dist=True
 
 args.ckpt_dir = 'experiments/'+args.model+'/'+args.ckpt_dir
 os.makedirs(args.ckpt_dir,exist_ok=True)
@@ -99,12 +100,13 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
 
         if args.amp:
             with autocast():
-                if mnad:
-                    sr, _, _, m_items, softmax_score_query, softmax_score_memory, separateness_loss, compactness_loss = model(lr,m_items,True)
-                    loss_iter = loss_function(sr,gt,separateness_loss, compactness_loss)
-                else:
+                if dist:
                     #sr=model(lr,True)
                     sr,middle=model(lr)
+                    loss_iter = loss_function(sr,gt)
+                else:
+                    #sr=model(lr,True)
+                    sr=model(lr)
                     loss_iter = loss_function(sr,gt)
 
                 scaler.scale(loss_iter).backward()
