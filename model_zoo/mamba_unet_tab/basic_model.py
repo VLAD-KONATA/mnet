@@ -8,6 +8,8 @@ from einops.layers.torch import Rearrange
 from mamba_ssm import Mamba
 #from unet import UNet
 from .unet import UNet
+#from catanet_arch import TAB
+from .catanet_arch import TAB
 
 def make_model(args):
     return newmodel(args)
@@ -17,22 +19,33 @@ def default_conv(in_channelss, out_channels, kernel_size, bias=True):
     return nn.Conv2d(
         in_channelss, out_channels, kernel_size,
         padding=(kernel_size // 2), bias=bias)
+    
 
+    
+class ContrastAwareModule(nn.Module):
+    def __init__(self, n_feat):
+        super().__init__()
+        self.contrast_estimator = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(n_feat, n_feat//4, 1),
+            nn.ReLU(),
+            nn.Conv2d(n_feat//4, 2, 1),
+            nn.Sigmoid()
+        )
+        self.adjuster = nn.Conv2d(2+n_feat, n_feat, 1)
+
+    def forward(self, x):
+        contrast = self.contrast_estimator(x)  # [B,2,1,1]
+        contrast_feat = contrast.expand(-1, -1, x.size(2), x.size(3))
+        return self.adjuster(torch.cat([x, contrast_feat], dim=1))
 
 class I2Block(nn.Module):
     def __init__(
         self, conv, n_feat, kernel_size,
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
-        inter_slice_branch = [
-            nn.PixelUnshuffle(2),
-            nn.Conv2d(4*n_feat,4*n_feat,3,1,1),
-            nn.ReLU(),
-            nn.Conv2d(4*n_feat,4*n_feat,3,1,1), # +
-            nn.PixelShuffle(2), # +
-            nn.Conv2d(n_feat,n_feat,1,1,0)
-        ]
-        self.inter_slice_branch = nn.Sequential(*inter_slice_branch)
+        self.contrast_module = ContrastAwareModule(n_feat)
+        self.tab=TAB(n_feat)
         self.res_scale = res_scale
         self.unet=UNet(64,64)
         self.mamba= Mamba(
@@ -44,16 +57,16 @@ class I2Block(nn.Module):
     )
 
     def forward(self, x):
+        
+        #xc = self.contrast_module(x)
+        x=self.tab(x)
         x_u=self.unet(x)
-       # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
-
         mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
-        x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
-        #out = x_inter + x_mamba + x
+        x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
+        
         out = x_u + x_mamba + x
-
         #out=x_u+x
         return out
 
@@ -132,7 +145,6 @@ class newmodel(nn.Module):
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
-        
         modules_body = [
             I2Group(
                 conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
@@ -156,7 +168,7 @@ class newmodel(nn.Module):
                 nn.Conv2d(32, out_slice, kernel_size=1)
             )
         
-    def forward(self, x,train=True):
+    def forward(self, x):
         #print('model_name=mamba_unet')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
@@ -167,7 +179,6 @@ class newmodel(nn.Module):
         align_list = []
         res = self.alignment[0](res)+res
         align_list.append(res)
-
         id_list=[]
         id_list=[0]
 
@@ -191,7 +202,6 @@ class newmodel(nn.Module):
         
         return out,res_middle
 
-
 if __name__ == '__main__':
     import argparse
     args = argparse.Namespace()
@@ -212,10 +222,12 @@ if __name__ == '__main__':
     #x = torch.ones(1,args.n_size,args.n_size,args.lr_slice_patch).cuda(gpy_id)
     #y = torch.ones(1,args.n_size,args.n_size,args.hr_slice_patch).cuda(gpy_id)
     x=torch.randn(1,256,256,4).cuda(gpy_id)
-    from torchsummary import summary
-    #summary(model,(256, 256, 4))
     #pred=model(x)
     #print(pred.shape)
-    from thop import profile
-    flops,params=profile(model,(x,))
-    print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+    
+    #from torchsummary import summary
+    #summary(model,(256, 256, 4))
+    
+    #from thop import profile
+    #flops,params=profile(model,(x,))
+    #print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))

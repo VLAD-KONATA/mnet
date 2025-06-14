@@ -1,0 +1,1 @@
+python -W ignore testct_dist.py --upscale 2 --lr_slice_patch 4  --testdata_path /home/konata/Dataset/IXI-T2/TAO_CT/I3Net/imagesTs --gpu_id '0' --model 'mamba_unet_dist'  --ckpt experiments/mamba_unet_dist/TAOCT_x2_2x4b/pth/0500.pth --ckpt_dir TAOCT_x2_2x4b  --num_workers 4

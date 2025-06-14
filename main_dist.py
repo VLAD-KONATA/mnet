@@ -39,8 +39,8 @@ def select_tmodel(args):
     args_add_additinoal_attr(args, opt_path)
     module = import_module(f'model_zoo.{args.model.lower()}.basic_model')
     model = module.make_model(args)
-    args.model='mamba_unet_contrast_dist'
-    args.ckpt_dir= 'experiments/mamba_unet_contrast_dist/IXI_x2'
+    args.model='mamba_unet_tab'
+    args.ckpt_dir= 'experiments/mamba_unet_tab/IXI_x2_dist'
     return model
 ####################################################################
 # seed

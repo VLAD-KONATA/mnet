@@ -1,5 +1,5 @@
 {
-    "model"      : "mamba_unet_dynacontrast",
+    "model"      : "mamba_unet_tab",
 
     "kernel_size": 3,
     "n_feats": 64,
