@@ -119,7 +119,6 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
             optimizer.step()
 
         psnr_iter = 0
-        print(gt.shape[0])
         for bz in range(gt.shape[0]):
             psnr_iter += calc_psnr(gt[bz, :, :, :],sr[bz, :, :, :]).item()
         psnr_iter /= (bz+1)  

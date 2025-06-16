@@ -130,7 +130,14 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        
+        '''
+        blocks=1
+        cblayers=2
+        depth=1
+        '''
+        blocks=2
+        cblayers=3
+        depth=2
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -147,13 +154,13 @@ class newmodel(nn.Module):
                                   conv(n_feats,n_feats,kernel_size))
         modules_body = [
             I2Group(
-                conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
-                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(2//2)]
+                conv, n_depth=depth,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
+                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(blocks)]
         self.body = nn.ModuleList(modules_body)
         
-        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(2)])
+        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(cblayers)])
 
-        self.fuse_align = nn.Conv2d(2*n_feats,n_feats,1,1,0)
+        self.fuse_align = nn.Conv2d(cblayers*n_feats,n_feats,1,1,0)
 
         modules_tail = [
             conv(n_feats, n_feats, kernel_size),
@@ -180,9 +187,9 @@ class newmodel(nn.Module):
         res = self.alignment[0](res)+res
         align_list.append(res)
         id_list=[]
-        id_list=[0]
+        #id_list=[0]
 
-        #id_list=[1,3]
+        id_list=[0,1]
         for id,layer in enumerate(self.body):
             res = layer(res)
             if  id==0:
@@ -228,6 +235,6 @@ if __name__ == '__main__':
     #from torchsummary import summary
     #summary(model,(256, 256, 4))
     
-    #from thop import profile
-    #flops,params=profile(model,(x,))
-    #print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+    from thop import profile
+    flops,params=profile(model,(x,))
+    print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
