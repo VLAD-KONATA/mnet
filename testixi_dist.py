@@ -134,6 +134,7 @@ def main():
     total_x_y_ssim /= (id+1)
     total_x_z_ssim /= (id+1)
     total_y_z_ssim /= (id+1)
+    print(nanid)
     print("average_psnr:",average_psnr) 
     print("average_x_y_ssim:",total_x_y_ssim) 
     print("average_x_z_ssim:",total_x_z_ssim) 
