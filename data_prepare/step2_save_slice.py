@@ -5,16 +5,16 @@ import numpy as np
 import nibabel as nib
 import os
 import pickle
-datapath = 'xxx/data_volume/Task10_Colon/imagesTr/'
+datapath = '/home/konata/Dataset/IXI-T2/I3Net/imagesTr/'
 volume_list = os.listdir(datapath)
-savepath = 'xxx/data_slice/Task10_Colon/imagesTr/'
+savepath = '/home/konata/Dataset/IXI-T2/I3Net/slice/'
 os.makedirs(savepath,exist_ok=True)
 
 for i,volumename in enumerate(volume_list):
     volume_path = datapath + volumename
     # pt
     data = pickle.load(open(volume_path,'rb'))
-    volnp = data['image'].astype("uint16")
+    volnp = data['image'].astype("float32")
     spacing = data['spacing']
 
     savefile = savepath + volumename.split('.')[0]
