@@ -1,0 +1,24 @@
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_tab_contrast/IXI_x2_newprocess/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_tab_contrast/IXI_x2_newprocess/pth/0050.pth
+[1 / 100] NAME:('IXI098-Guys-0745-T2',) PSNR:92.31245422363281 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:8.78 
+[2 / 100] NAME:('IXI364-Guys-0920-T2',) PSNR:92.3069076538086 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:4.06 
+[3 / 100] NAME:('IXI420-Guys-1028-T2',) PSNR:91.37086486816406 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:4.34 
+[4 / 100] NAME:('IXI328-HH-2295-T2',) PSNR:92.0851058959961 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:5.03 
+[5 / 100] NAME:('IXI459-Guys-0992-T2',) PSNR:91.90121459960938 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:4.94 
+[6 / 100] NAME:('IXI236-Guys-0817-T2',) PSNR:92.04011535644531 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:4.91 
+[7 / 100] NAME:('IXI061-Guys-0715-T2',) PSNR:92.12828063964844 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:4.91 
+[8 / 100] NAME:('IXI347-IOP-0927-T2',) PSNR:92.57623291015625 x_y_ssim:1.0000 x_z_ssim:1.0000 y_z_ssim:1.0000 time:5.27 

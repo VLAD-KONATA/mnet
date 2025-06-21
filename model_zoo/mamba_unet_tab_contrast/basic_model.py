@@ -130,7 +130,6 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        '''
         blocks=1
         cblayers=2
         depth=1
@@ -138,6 +137,7 @@ class newmodel(nn.Module):
         blocks=2
         cblayers=3
         depth=2
+        '''
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16

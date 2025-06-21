@@ -14,7 +14,7 @@ for i,volumename in enumerate(volume_list):
     volume_path = datapath + volumename
     # pt
     data = pickle.load(open(volume_path,'rb'))
-    volnp = data['image'].astype("float32")
+    volnp = data['image'].astype("uint16")
     spacing = data['spacing']
 
     savefile = savepath + volumename.split('.')[0]
