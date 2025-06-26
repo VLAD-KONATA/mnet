@@ -27,7 +27,7 @@ def padding(img):
     #padded_slice = np.pad(slice, ((pad_top, pad_bottom),(pad_left, pad_right)), mode='constant',constant_values = 0)
     return padded
 
-for inst in ['imagesTr','imagesTs']:
+for inst in ['imagesTr_lca','imagesTs_lca']:
     #file_dir = src_path
     file_dir = os.path.join(src_path, inst)
     patients = os.listdir(file_dir)
@@ -36,6 +36,7 @@ for inst in ['imagesTr','imagesTs']:
             img, header = load(os.path.join(file_dir, patient))
             #img=padding(img)
             spacing = header.get_voxel_spacing()
+            '''
             """ 将图像线性映射到 [target_min, target_max] 范围 """
             target_min=0
             target_max=1
@@ -44,13 +45,11 @@ for inst in ['imagesTr','imagesTs']:
             img=normalized * (target_max - target_min) + target_min
 
             img = img.astype("float32")
-
             '''
             img = np.clip(img,-1024,img.max())
             img = img - img.min()
             img = np.clip(img,0,4095)
             img = img.astype("uint16")
-            '''
             data = {'image': img, 'spacing': spacing}
             #if not patient.split('.')[0] in test_set:
             if inst =='imagesTr':
