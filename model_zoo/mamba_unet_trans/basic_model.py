@@ -6,12 +6,12 @@ from functools import partial
 import torch.nn.functional as F
 from einops.layers.torch import Rearrange
 from mamba_ssm import Mamba
-from unet import UNet
-#from .unet import UNet
-#from catanet_arch import TAB
-#from .catanet_arch import TAB
+#from unet import UNet
+from .unet import UNet
+#from catanet_arch import TAB,LRSA
+from .catanet_arch import TAB,LRSA
 #from .transformer import TransformerBlock
-from transformer import TransformerBlock
+#from transformer import TransformerBlock
 
 def make_model(args):
     return newmodel(args)
@@ -47,7 +47,8 @@ class I2Block(nn.Module):
         bias=True, bn=False, act=nn.ReLU(True), res_scale=1,head_num=1,win_num_sqrt=16,window_size=16):
         super(I2Block, self).__init__()
         self.contrast_module = ContrastAwareModule(n_feat)
-        #self.tab=TAB(n_feat)
+        self.tab=TAB(n_feat)
+        self.lrsa=LRSA(n_feat,36,96,4)
         self.res_scale = res_scale
         self.unet=UNet(64,64)
         self.mamba= Mamba(
@@ -60,8 +61,9 @@ class I2Block(nn.Module):
 
     def forward(self, x):
         
-        #x = self.contrast_module(x)
-        #x=self.tab(x)
+        x = self.contrast_module(x)
+        x=self.tab(x)
+        x=self.lrsa(x,4)
         x_u=self.unet(x)
         mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
@@ -93,18 +95,12 @@ class CrossViewBlock(nn.Module):
         super().__init__()
 
         self.norm = nn.LayerNorm(n_feat)
-        self.transformer=TransformerBlock(64,8,256)
+        #self.transformer=TransformerBlock(64,8,256)
         self.conv_sag = nn.Sequential(
             nn.Conv2d(n_feat,n_feat,1,1,0),
             Rearrange('b c h w -> b h c w'),
             nn.PixelShuffle(2),
             nn.Conv2d(64,64,3,1,1),
-
-            Rearrange('b h c w -> b (h c) w'),
-            TransformerBlock(512,8,256),
-            Rearrange('b (h c) w  -> b h c w',h=64,c=128),
-
-
             nn.ReLU(),
             nn.Conv2d(64,64,3,1,1),
             nn.PixelUnshuffle(2),
@@ -116,11 +112,6 @@ class CrossViewBlock(nn.Module):
                 Rearrange('b c h w -> b w c h'),    #b 256 64 256
             nn.PixelShuffle(2), #b 64 128 512
             nn.Conv2d(64,64,3,1,1),
-
-            Rearrange('b w c h -> b (w c) h '),
-            TransformerBlock(512,8,256),
-            Rearrange('b (w c) h  -> b w c h',c=64,w=128),
-
             nn.ReLU(),
             nn.Conv2d(64,64,3,1,1),
             nn.PixelUnshuffle(2),
@@ -147,7 +138,7 @@ class newmodel(nn.Module):
         cblayers=2
         depth=1
         '''
-        blocks=4
+        blocks=1
         cblayers=3
         depth=2
         '''
@@ -205,10 +196,8 @@ class newmodel(nn.Module):
         id_list=[0,1]
         for id,layer in enumerate(self.body):
             res = layer(res)
-            '''
             if  id==0:
                 res_middle=self.aux_s(res)
-                '''
             if id in id_list:
                 res = self.alignment[id//2+1](res) + res
                 align_list.append(res)
@@ -222,8 +211,8 @@ class newmodel(nn.Module):
         out[:,::self.args.upscale] = x
         out = out.permute(0,2,3,1).contiguous()
         
-        #return out,res_middle
-        return out
+        return out,res_middle
+        #return out
 
 if __name__ == '__main__':
     import argparse
@@ -245,11 +234,11 @@ if __name__ == '__main__':
     #x = torch.ones(1,args.n_size,args.n_size,args.lr_slice_patch).cuda(gpy_id)
     #y = torch.ones(1,args.n_size,args.n_size,args.hr_slice_patch).cuda(gpy_id)
     x=torch.randn(1,256,256,4).cuda(gpy_id)
-    #pred=model(x)
-    #print(pred.shape)
+    pred=model(x)
+    print(pred.shape)
     
-    from torchsummary import summary
-    summary(model,(256, 256, 4))
+    #from torchsummary import summary
+    #summary(model,(256, 256, 4))
     
     #from thop import profile
     #flops,params=profile(model,(x,))
