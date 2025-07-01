@@ -279,19 +279,20 @@ class I2Block(nn.Module):
     )
 
     def forward(self, x):
-        x = self.ffn0(self.dw0(x))
+       # x = self.ffn0(self.dw0(x))
         x_dw=self.dwconv(x)
-        x_wave=self.wave(x)
+        #x_wave=self.wave(x)
         #x_u=self.unet(x)
         mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
         
-        out = x_dw + x_wave + x_mamba + x
+        #out = x_dw + x_wave + x_mamba + x
+        out = x_dw + x_mamba + x
         #out = x_dw + x_wave  + x
         #out=x_u+x
-        out= self.ffn1(self.dw1(out))
+        #out= self.ffn1(self.dw1(out))
         return out
 
 class I2Group(nn.Module):
@@ -354,7 +355,7 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        blocks=1
+        blocks=4
         cblayers=2
         depth=1
         '''
@@ -362,6 +363,7 @@ class newmodel(nn.Module):
         cblayers=3
         depth=2
         '''
+        self.blocks=blocks
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -411,7 +413,7 @@ class newmodel(nn.Module):
         res = self.alignment[0](res)+res
         align_list.append(res)
         id_list=[]
-        id_list=[0]
+        id_list=[self.blocks-1]
         #id_list=[3]
         #id_list=[3]
         for id,layer in enumerate(self.body):
@@ -420,8 +422,8 @@ class newmodel(nn.Module):
             if  id==0:
                 res_middle=self.aux_s(res)
             if id in id_list:
-                res = self.alignment[id//2+1](res) + res
-                #res = self.alignment[id//2](res) + res
+                res = self.alignment[id//self.blocks+1](res) + res
+                #res = self.alignment[id//2+1](res) + res
                 align_list.append(res)
 
         res = self.fuse_align(torch.cat(align_list,1))

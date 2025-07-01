@@ -86,7 +86,7 @@ def main():
             a=sr
             a=a.cpu().numpy()
             a=a.transpose(2,1,0)
-            vol_ori = sitk.ReadImage('/home/konata/Dataset/IXI-T2/origin/imagesTs_lca/' +name[0]+'.nii.gz')
+            vol_ori = sitk.ReadImage('/home/konata/Dataset/IXI-T2/origin/imagesTs/' +name[0]+'.nii.gz')
             vol_ori = sitk.Image(vol_ori)
             image = sitk.GetImageFromArray(a)
             image.SetSpacing(vol_ori.GetSpacing())

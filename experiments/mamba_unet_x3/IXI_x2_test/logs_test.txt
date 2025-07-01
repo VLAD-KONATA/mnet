@@ -1,0 +1,133 @@
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_x2_test/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_x3/IXI_x2_test/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unetx3/IXI_x2_test/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_x3/IXI_x2_test/pth/0500.pth
+[1 / 100] NAME:('IXI098-Guys-0745-T2',) PSNR:41.857215881347656 x_y_ssim:0.9859 x_z_ssim:0.9854 y_z_ssim:0.9861 time:5.35 
+[2 / 100] NAME:('IXI364-Guys-0920-T2',) PSNR:48.202152252197266 x_y_ssim:0.9911 x_z_ssim:0.9908 y_z_ssim:0.9909 time:2.61 
+[3 / 100] NAME:('IXI420-Guys-1028-T2',) PSNR:51.59658432006836 x_y_ssim:0.9957 x_z_ssim:0.9957 y_z_ssim:0.9958 time:2.72 
+[4 / 100] NAME:('IXI328-HH-2295-T2',) PSNR:47.28205871582031 x_y_ssim:0.9919 x_z_ssim:0.9917 y_z_ssim:0.9920 time:2.63 
+[5 / 100] NAME:('IXI459-Guys-0992-T2',) PSNR:54.465423583984375 x_y_ssim:0.9974 x_z_ssim:0.9974 y_z_ssim:0.9974 time:2.64 
+[6 / 100] NAME:('IXI236-Guys-0817-T2',) PSNR:53.65513229370117 x_y_ssim:0.9972 x_z_ssim:0.9971 y_z_ssim:0.9972 time:2.70 
+[7 / 100] NAME:('IXI061-Guys-0715-T2',) PSNR:42.49256134033203 x_y_ssim:0.9876 x_z_ssim:0.9873 y_z_ssim:0.9880 time:2.53 
+[8 / 100] NAME:('IXI347-IOP-0927-T2',) PSNR:38.8096923828125 x_y_ssim:0.9754 x_z_ssim:0.9746 y_z_ssim:0.9755 time:2.72 
+[9 / 100] NAME:('IXI535-Guys-1061-T2',) PSNR:51.530487060546875 x_y_ssim:0.9957 x_z_ssim:0.9956 y_z_ssim:0.9957 time:2.57 
+[10 / 100] NAME:('IXI416-Guys-1051-T2',) PSNR:50.08363342285156 x_y_ssim:0.9936 x_z_ssim:0.9937 y_z_ssim:0.9937 time:2.67 
+[11 / 100] NAME:('IXI159-HH-1549-T2',) PSNR:52.84828186035156 x_y_ssim:0.9970 x_z_ssim:0.9969 y_z_ssim:0.9971 time:2.80 
+[12 / 100] NAME:('IXI342-Guys-0909-T2',) PSNR:53.90898895263672 x_y_ssim:0.9971 x_z_ssim:0.9971 y_z_ssim:0.9972 time:2.61 
+[13 / 100] NAME:('IXI185-Guys-0795-T2',) PSNR:52.742523193359375 x_y_ssim:0.9966 x_z_ssim:0.9966 y_z_ssim:0.9966 time:2.61 
+[14 / 100] NAME:('IXI044-Guys-0712-T2',) PSNR:39.43458557128906 x_y_ssim:0.9821 x_z_ssim:0.9821 y_z_ssim:0.9822 time:2.54 
+[15 / 100] NAME:('IXI071-Guys-0770-T2',) PSNR:40.76076126098633 x_y_ssim:0.9816 x_z_ssim:0.9805 y_z_ssim:0.9818 time:2.62 
+[16 / 100] NAME:('IXI216-HH-1635-T2',) PSNR:46.231422424316406 x_y_ssim:0.9894 x_z_ssim:0.9890 y_z_ssim:0.9895 time:2.56 
+[17 / 100] NAME:('IXI163-HH-1621-T2',) PSNR:53.444271087646484 x_y_ssim:0.9974 x_z_ssim:0.9973 y_z_ssim:0.9974 time:2.57 
+[18 / 100] NAME:('IXI486-Guys-1005-T2',) PSNR:49.00267028808594 x_y_ssim:0.9928 x_z_ssim:0.9925 y_z_ssim:0.9928 time:2.63 
+[19 / 100] NAME:('IXI231-IOP-0866-T2',) PSNR:37.51539993286133 x_y_ssim:0.9751 x_z_ssim:0.9749 y_z_ssim:0.9760 time:2.75 
+[20 / 100] NAME:('IXI168-HH-1607-T2',) PSNR:51.33687973022461 x_y_ssim:0.9961 x_z_ssim:0.9960 y_z_ssim:0.9962 time:2.70 
+[21 / 100] NAME:('IXI567-HH-2536-T2',) PSNR:52.47550582885742 x_y_ssim:0.9972 x_z_ssim:0.9972 y_z_ssim:0.9972 time:2.52 
+[22 / 100] NAME:('IXI505-Guys-1026-T2',) PSNR:53.72154235839844 x_y_ssim:0.9972 x_z_ssim:0.9972 y_z_ssim:0.9972 time:2.59 
+[23 / 100] NAME:('IXI135-Guys-0779-T2',) PSNR:43.25568389892578 x_y_ssim:0.9886 x_z_ssim:0.9883 y_z_ssim:0.9888 time:2.66 
+[24 / 100] NAME:('IXI536-Guys-1059-T2',) PSNR:50.27743911743164 x_y_ssim:0.9944 x_z_ssim:0.9942 y_z_ssim:0.9943 time:2.58 
+[25 / 100] NAME:('IXI362-HH-2051-T2',) PSNR:53.033607482910156 x_y_ssim:0.9973 x_z_ssim:0.9972 y_z_ssim:0.9973 time:2.55 
+[26 / 100] NAME:('IXI233-IOP-0875-T2',) PSNR:37.0474967956543 x_y_ssim:0.9664 x_z_ssim:0.9647 y_z_ssim:0.9668 time:3.23 
+[27 / 100] NAME:('IXI538-HH-2411-T2',) PSNR:46.870880126953125 x_y_ssim:0.9912 x_z_ssim:0.9908 y_z_ssim:0.9910 time:3.04 
+[28 / 100] NAME:('IXI211-HH-1568-T2',) PSNR:50.85210418701172 x_y_ssim:0.9950 x_z_ssim:0.9951 y_z_ssim:0.9952 time:2.78 
+[29 / 100] NAME:('IXI561-IOP-1152-T2',) PSNR:37.98851776123047 x_y_ssim:0.9751 x_z_ssim:0.9752 y_z_ssim:0.9762 time:2.77 
+[30 / 100] NAME:('IXI441-HH-2154-T2',) PSNR:53.28555679321289 x_y_ssim:0.9974 x_z_ssim:0.9973 y_z_ssim:0.9974 time:2.61 
+[31 / 100] NAME:('IXI498-Guys-1050-T2',) PSNR:52.838768005371094 x_y_ssim:0.9963 x_z_ssim:0.9964 y_z_ssim:0.9965 time:2.61 
+[32 / 100] NAME:('IXI554-Guys-1068-T2',) PSNR:50.702659606933594 x_y_ssim:0.9944 x_z_ssim:0.9942 y_z_ssim:0.9943 time:2.62 
+[33 / 100] NAME:('IXI415-Guys-0942-T2',) PSNR:51.72312927246094 x_y_ssim:0.9962 x_z_ssim:0.9960 y_z_ssim:0.9961 time:2.57 
+[34 / 100] NAME:('IXI491-Guys-1032-T2',) PSNR:53.091983795166016 x_y_ssim:0.9967 x_z_ssim:0.9966 y_z_ssim:0.9967 time:2.63 
+[35 / 100] NAME:('IXI408-Guys-0962-T2',) PSNR:52.63487243652344 x_y_ssim:0.9966 x_z_ssim:0.9965 y_z_ssim:0.9966 time:2.61 
+[36 / 100] NAME:('IXI228-Guys-0822-T2',) PSNR:51.12416076660156 x_y_ssim:0.9953 x_z_ssim:0.9952 y_z_ssim:0.9953 time:2.61 
+[37 / 100] NAME:('IXI541-IOP-1146-T2',) PSNR:37.7042350769043 x_y_ssim:0.9733 x_z_ssim:0.9722 y_z_ssim:0.9734 time:2.75 
+[38 / 100] NAME:('IXI319-Guys-0901-T2',) PSNR:53.28076171875 x_y_ssim:0.9968 x_z_ssim:0.9967 y_z_ssim:0.9968 time:2.64 
+[39 / 100] NAME:('IXI240-Guys-0834-T2',) PSNR:54.567352294921875 x_y_ssim:0.9974 x_z_ssim:0.9974 y_z_ssim:0.9975 time:2.57 
+[40 / 100] NAME:('IXI201-HH-1588-T2',) PSNR:52.25279235839844 x_y_ssim:0.9967 x_z_ssim:0.9966 y_z_ssim:0.9967 time:2.65 
+[41 / 100] NAME:('IXI128-HH-1470-T2',) PSNR:50.9651985168457 x_y_ssim:0.9962 x_z_ssim:0.9961 y_z_ssim:0.9962 time:2.61 
+[42 / 100] NAME:('IXI389-Guys-0930-T2',) PSNR:50.724037170410156 x_y_ssim:0.9943 x_z_ssim:0.9943 y_z_ssim:0.9944 time:2.67 
+[43 / 100] NAME:('IXI322-IOP-0891-T2',) PSNR:38.433204650878906 x_y_ssim:0.9755 x_z_ssim:0.9755 y_z_ssim:0.9766 time:2.72 
+[44 / 100] NAME:('IXI353-HH-1996-T2',) PSNR:49.66035842895508 x_y_ssim:0.9930 x_z_ssim:0.9930 y_z_ssim:0.9932 time:2.61 
+[45 / 100] NAME:('IXI013-HH-1212-T2',) PSNR:48.57032775878906 x_y_ssim:0.9954 x_z_ssim:0.9950 y_z_ssim:0.9953 time:2.35 
+[46 / 100] NAME:('IXI310-IOP-0890-T2',) PSNR:38.03950881958008 x_y_ssim:0.9734 x_z_ssim:0.9723 y_z_ssim:0.9735 time:2.75 
+[47 / 100] NAME:('IXI259-HH-1804-T2',) PSNR:43.84096145629883 x_y_ssim:0.9866 x_z_ssim:0.9848 y_z_ssim:0.9860 time:2.59 
+[48 / 100] NAME:('IXI365-Guys-0923-T2',) PSNR:51.60323715209961 x_y_ssim:0.9958 x_z_ssim:0.9956 y_z_ssim:0.9958 time:2.64 
+[49 / 100] NAME:('IXI276-HH-1840-T2',) PSNR:50.74140548706055 x_y_ssim:0.9957 x_z_ssim:0.9956 y_z_ssim:0.9958 time:2.63 
+[50 / 100] NAME:('IXI179-Guys-0777-T2',) PSNR:43.35883331298828 x_y_ssim:0.9897 x_z_ssim:0.9895 y_z_ssim:0.9900 time:2.65 
+[51 / 100] NAME:('IXI294-IOP-0868-T2',) PSNR:35.512786865234375 x_y_ssim:0.9645 x_z_ssim:0.9633 y_z_ssim:0.9647 time:2.72 
+[52 / 100] NAME:('IXI157-Guys-0816-T2',) PSNR:54.66900634765625 x_y_ssim:0.9975 x_z_ssim:0.9974 y_z_ssim:0.9975 time:2.57 
+[53 / 100] NAME:('IXI115-Guys-0738-T2',) PSNR:41.355316162109375 x_y_ssim:0.9871 x_z_ssim:0.9868 y_z_ssim:0.9874 time:2.59 
+[54 / 100] NAME:('IXI296-HH-1970-T2',) PSNR:54.16972732543945 x_y_ssim:0.9974 x_z_ssim:0.9974 y_z_ssim:0.9974 time:2.66 
+[55 / 100] NAME:('IXI330-Guys-0881-T2',) PSNR:49.779937744140625 x_y_ssim:0.9938 x_z_ssim:0.9935 y_z_ssim:0.9936 time:2.58 
+[56 / 100] NAME:('IXI209-Guys-0804-T2',) PSNR:51.96839904785156 x_y_ssim:0.9954 x_z_ssim:0.9954 y_z_ssim:0.9955 time:2.58 
+[57 / 100] NAME:('IXI531-Guys-1057-T2',) PSNR:49.19121170043945 x_y_ssim:0.9927 x_z_ssim:0.9924 y_z_ssim:0.9927 time:2.62 
+[58 / 100] NAME:('IXI318-Guys-0895-T2',) PSNR:50.874176025390625 x_y_ssim:0.9952 x_z_ssim:0.9951 y_z_ssim:0.9952 time:2.59 
+[59 / 100] NAME:('IXI068-Guys-0756-T2',) PSNR:42.23796463012695 x_y_ssim:0.9876 x_z_ssim:0.9868 y_z_ssim:0.9881 time:2.56 
+[60 / 100] NAME:('IXI380-Guys-0944-T2',) PSNR:52.120330810546875 x_y_ssim:0.9963 x_z_ssim:0.9962 y_z_ssim:0.9963 time:2.57 
+[61 / 100] NAME:('IXI242-HH-1722-T2',) PSNR:52.65048599243164 x_y_ssim:0.9972 x_z_ssim:0.9971 y_z_ssim:0.9972 time:2.59 
+[62 / 100] NAME:('IXI321-Guys-0903-T2',) PSNR:50.19923782348633 x_y_ssim:0.9944 x_z_ssim:0.9942 y_z_ssim:0.9943 time:2.65 
+[63 / 100] NAME:('IXI501-Guys-1016-T2',) PSNR:52.99882888793945 x_y_ssim:0.9969 x_z_ssim:0.9969 y_z_ssim:0.9969 time:2.55 
+[64 / 100] NAME:('IXI424-IOP-0991-T2',) PSNR:39.204124450683594 x_y_ssim:0.9758 x_z_ssim:0.9750 y_z_ssim:0.9760 time:2.74 
+[65 / 100] NAME:('IXI067-HH-1356-T2',) PSNR:47.66401672363281 x_y_ssim:0.9940 x_z_ssim:0.9936 y_z_ssim:0.9939 time:2.67 
+[66 / 100] NAME:('IXI036-Guys-0736-T2',) PSNR:40.98896789550781 x_y_ssim:0.9808 x_z_ssim:0.9799 y_z_ssim:0.9809 time:2.60 
+[67 / 100] NAME:('IXI025-Guys-0852-T2',) PSNR:53.36797332763672 x_y_ssim:0.9971 x_z_ssim:0.9970 y_z_ssim:0.9971 time:2.60 
+[68 / 100] NAME:('IXI141-Guys-0789-T2',) PSNR:52.75299835205078 x_y_ssim:0.9967 x_z_ssim:0.9966 y_z_ssim:0.9967 time:2.62 
+[69 / 100] NAME:('IXI467-Guys-0983-T2',) PSNR:53.17795181274414 x_y_ssim:0.9968 x_z_ssim:0.9967 y_z_ssim:0.9968 time:2.54 
+[70 / 100] NAME:('IXI414-Guys-0957-T2',) PSNR:53.6787223815918 x_y_ssim:0.9972 x_z_ssim:0.9972 y_z_ssim:0.9972 time:2.60 
+[71 / 100] NAME:('IXI277-HH-1770-T2',) PSNR:45.28034591674805 x_y_ssim:0.9837 x_z_ssim:0.9833 y_z_ssim:0.9838 time:2.69 
+[72 / 100] NAME:('IXI400-Guys-0977-T2',) PSNR:49.67336654663086 x_y_ssim:0.9939 x_z_ssim:0.9936 y_z_ssim:0.9937 time:2.61 
+[73 / 100] NAME:('IXI058-Guys-0726-T2',) PSNR:41.19580841064453 x_y_ssim:0.9844 x_z_ssim:0.9836 y_z_ssim:0.9847 time:2.62 
+[74 / 100] NAME:('IXI012-HH-1211-T2',) PSNR:49.108924865722656 x_y_ssim:0.9955 x_z_ssim:0.9953 y_z_ssim:0.9955 time:2.20 
+[75 / 100] NAME:('IXI549-Guys-1046-T2',) PSNR:54.21751403808594 x_y_ssim:0.9973 x_z_ssim:0.9972 y_z_ssim:0.9973 time:2.63 
+[76 / 100] NAME:('IXI137-HH-1472-T2',) PSNR:48.01441192626953 x_y_ssim:0.9945 x_z_ssim:0.9943 y_z_ssim:0.9946 time:2.56 
+[77 / 100] NAME:('IXI241-Guys-0833-T2',) PSNR:52.87845230102539 x_y_ssim:0.9964 x_z_ssim:0.9964 y_z_ssim:0.9964 time:2.59 
+[78 / 100] NAME:('IXI084-Guys-0741-T2',) PSNR:44.16039276123047 x_y_ssim:0.9918 x_z_ssim:0.9917 y_z_ssim:0.9920 time:2.54 
+[79 / 100] NAME:('IXI396-HH-2115-T2',) PSNR:51.36235809326172 x_y_ssim:0.9962 x_z_ssim:0.9961 y_z_ssim:0.9962 time:2.59 
+[80 / 100] NAME:('IXI080-HH-1341-T2',) PSNR:48.331565856933594 x_y_ssim:0.9952 x_z_ssim:0.9950 y_z_ssim:0.9952 time:2.56 
+[81 / 100] NAME:('IXI264-Guys-0854-T2',) PSNR:48.99224090576172 x_y_ssim:0.9905 x_z_ssim:0.9905 y_z_ssim:0.9907 time:2.60 
+[82 / 100] NAME:('IXI208-Guys-0808-T2',) PSNR:51.958106994628906 x_y_ssim:0.9953 x_z_ssim:0.9952 y_z_ssim:0.9954 time:2.56 
+[83 / 100] NAME:('IXI290-IOP-0874-T2',) PSNR:37.93430709838867 x_y_ssim:0.9780 x_z_ssim:0.9784 y_z_ssim:0.9791 time:2.66 
+[84 / 100] NAME:('IXI568-HH-2607-T2',) PSNR:45.36260223388672 x_y_ssim:0.9872 x_z_ssim:0.9866 y_z_ssim:0.9871 time:2.62 
+[85 / 100] NAME:('IXI423-IOP-0974-T2',) PSNR:37.83028030395508 x_y_ssim:0.9712 x_z_ssim:0.9707 y_z_ssim:0.9716 time:2.71 
+[86 / 100] NAME:('IXI456-Guys-1019-T2',) PSNR:53.04420852661133 x_y_ssim:0.9969 x_z_ssim:0.9968 y_z_ssim:0.9968 time:2.57 
+[87 / 100] NAME:('IXI354-HH-2024-T2',) PSNR:46.529624938964844 x_y_ssim:0.9903 x_z_ssim:0.9898 y_z_ssim:0.9899 time:2.60 
+[88 / 100] NAME:('IXI307-IOP-0872-T2',) PSNR:37.493587493896484 x_y_ssim:0.9718 x_z_ssim:0.9711 y_z_ssim:0.9724 time:2.71 
+[89 / 100] NAME:('IXI461-Guys-0998-T2',) PSNR:52.021297454833984 x_y_ssim:0.9960 x_z_ssim:0.9959 y_z_ssim:0.9960 time:2.55 
+[90 / 100] NAME:('IXI572-HH-2605-T2',) PSNR:44.24808883666992 x_y_ssim:0.9863 x_z_ssim:0.9852 y_z_ssim:0.9856 time:2.60 
+[91 / 100] NAME:('IXI057-HH-1342-T2',) PSNR:47.66416931152344 x_y_ssim:0.9948 x_z_ssim:0.9944 y_z_ssim:0.9949 time:2.66 
+[92 / 100] NAME:('IXI361-Guys-0913-T2',) PSNR:53.135154724121094 x_y_ssim:0.9969 x_z_ssim:0.9967 y_z_ssim:0.9968 time:2.61 
+[93 / 100] NAME:('IXI492-Guys-1022-T2',) PSNR:50.301185607910156 x_y_ssim:0.9947 x_z_ssim:0.9943 y_z_ssim:0.9946 time:2.54 
+[94 / 100] NAME:('IXI244-Guys-0841-T2',) PSNR:53.37038040161133 x_y_ssim:0.9968 x_z_ssim:0.9968 y_z_ssim:0.9969 time:2.51 
+[95 / 100] NAME:('IXI458-Guys-0993-T2',) PSNR:51.1992301940918 x_y_ssim:0.9952 x_z_ssim:0.9951 y_z_ssim:0.9952 time:2.49 
+[96 / 100] NAME:('IXI484-HH-2179-T2',) PSNR:52.29429626464844 x_y_ssim:0.9965 x_z_ssim:0.9966 y_z_ssim:0.9967 time:2.49 
+[97 / 100] NAME:('IXI288-Guys-0879-T2',) PSNR:50.501625061035156 x_y_ssim:0.9945 x_z_ssim:0.9943 y_z_ssim:0.9944 time:2.59 
+[98 / 100] NAME:('IXI139-Guys-0815-T2',) PSNR:52.70368194580078 x_y_ssim:0.9965 x_z_ssim:0.9964 y_z_ssim:0.9964 time:2.63 
+[99 / 100] NAME:('IXI327-HH-1999-T2',) PSNR:52.86016845703125 x_y_ssim:0.9973 x_z_ssim:0.9973 y_z_ssim:0.9973 time:2.57 
+[100 / 100] NAME:('IXI438-HH-2155-T2',) PSNR:49.86100769042969 x_y_ssim:0.9945 x_z_ssim:0.9944 y_z_ssim:0.9945 time:2.50 
+PSNR: 48.439573974609374 x_y_ssim: 0.991361 x_z_ssim: 0.991106 y_z_ssim: 0.991448
