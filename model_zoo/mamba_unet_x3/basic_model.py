@@ -218,7 +218,6 @@ class I2Block(nn.Module):
         self.dwconv=DWConv2d_BN_ReLU(64,64,3)
         self.res_scale = res_scale
         self.unet=UNet(64,64)
-        '''
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
     d_model=256, # Model dimension d_model
@@ -226,19 +225,19 @@ class I2Block(nn.Module):
     d_conv=4,    # Local convolution width
     expand=2,    # Block expansion factor
     )
-'''
+
     def forward(self, x):
         
         x_dw=self.dwconv(x)
         x_wave=self.wave(x)
         #x_u=self.unet(x)
-        #mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
-        #mamba_x=mamba_x.contiguous()
-        #output = self.mamba(mamba_x)
-        #x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
+        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
+        mamba_x=mamba_x.contiguous()
+        output = self.mamba(mamba_x)
+        x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
         
-        #out = x_dw + x_wave + x_mamba + x
-        out = x_dw + x_wave  + x
+        out = x_dw + x_wave + x_mamba + x
+        #out = x_dw + x_wave  + x
         #out=x_u+x
         return out
 
@@ -359,15 +358,17 @@ class newmodel(nn.Module):
         res = self.alignment[0](res)+res
         align_list.append(res)
         id_list=[]
-        #id_list=[0]
-
-        id_list=[0,1]
+        id_list=[0]
+        #id_list=[3]
+        #id_list=[3]
         for id,layer in enumerate(self.body):
             res = layer(res)
+            #print(id)
             if  id==0:
                 res_middle=self.aux_s(res)
             if id in id_list:
                 res = self.alignment[id//2+1](res) + res
+                #res = self.alignment[id//2](res) + res
                 align_list.append(res)
 
         res = self.fuse_align(torch.cat(align_list,1))

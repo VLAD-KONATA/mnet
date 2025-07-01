@@ -3,7 +3,7 @@ data_type : direct
 lr_slice_patch : 4
 traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
 testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
-model : mamba_unet_trans
+model : mamba_unet_x3
 upscale : 2
 resume : False
 ckpt : 
@@ -22,7 +22,7 @@ one_batch_n_sample : 1
 start_epoch : 0
 max_epoch : 500
 warmup_epoch : 0.05
-ckpt_dir : experiments/mamba_unet_trans/IXI_x2_2x2b
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
 gpu_id : 0
 num_workers : 4
 parallel : True
@@ -42,7 +42,7 @@ data_type : direct
 lr_slice_patch : 4
 traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
 testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
-model : mamba_unet_trans
+model : mamba_unet_x3
 upscale : 2
 resume : False
 ckpt : 
@@ -61,7 +61,7 @@ one_batch_n_sample : 1
 start_epoch : 0
 max_epoch : 500
 warmup_epoch : 0.05
-ckpt_dir : experiments/mamba_unet_trans/IXI_x2_2x2b
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
 gpu_id : 0
 num_workers : 4
 parallel : True
@@ -81,7 +81,7 @@ data_type : direct
 lr_slice_patch : 4
 traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
 testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
-model : mamba_unet_trans
+model : mamba_unet_x3
 upscale : 2
 resume : False
 ckpt : 
@@ -100,7 +100,7 @@ one_batch_n_sample : 1
 start_epoch : 0
 max_epoch : 500
 warmup_epoch : 0.05
-ckpt_dir : experiments/mamba_unet_trans/IXI_x2_2x2b
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
 gpu_id : 0
 num_workers : 4
 parallel : True
@@ -120,7 +120,7 @@ data_type : direct
 lr_slice_patch : 4
 traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
 testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
-model : mamba_unet_trans
+model : mamba_unet_x3
 upscale : 2
 resume : False
 ckpt : 
@@ -139,7 +139,7 @@ one_batch_n_sample : 1
 start_epoch : 0
 max_epoch : 500
 warmup_epoch : 0.05
-ckpt_dir : experiments/mamba_unet_trans/IXI_x2_2x2b
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
 gpu_id : 0
 num_workers : 4
 parallel : True
@@ -159,7 +159,7 @@ data_type : direct
 lr_slice_patch : 4
 traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
 testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
-model : mamba_unet_trans
+model : mamba_unet_x3
 upscale : 2
 resume : False
 ckpt : 
@@ -178,7 +178,7 @@ one_batch_n_sample : 1
 start_epoch : 0
 max_epoch : 500
 warmup_epoch : 0.05
-ckpt_dir : experiments/mamba_unet_trans/IXI_x2_2x2b
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
 gpu_id : 0
 num_workers : 4
 parallel : True
@@ -198,7 +198,7 @@ data_type : direct
 lr_slice_patch : 4
 traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
 testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
-model : mamba_unet_trans
+model : mamba_unet_x3
 upscale : 2
 resume : False
 ckpt : 
@@ -217,7 +217,163 @@ one_batch_n_sample : 1
 start_epoch : 0
 max_epoch : 500
 warmup_epoch : 0.05
-ckpt_dir : experiments/mamba_unet_trans/IXI_x2_2x2b
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : mamba_unet_x3
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : mamba_unet_x3
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : mamba_unet_x3
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
+gpu_id : 0
+num_workers : 4
+parallel : True
+local_rank : 0
+amp : True
+cuda : True
+hr_slice_patch : 7
+kernel_size : 3
+n_feats : 64
+num_blocks : 16
+res_scale : 1
+head_num : 1
+window_size : 16
+win_num_sqrt : 16
+START EXPERIMENT
+data_type : direct
+lr_slice_patch : 4
+traindata_path : /home/konata/Dataset/IXI-T2/I3Net/slice
+testdata_path : /home/konata/Dataset/IXI-T2/I3Net/imagesTs
+model : mamba_unet_x3
+upscale : 2
+resume : False
+ckpt : 
+optim : Adam
+lr : 0.0003
+wd : 0.0001
+beta1 : 0.9
+beta2 : 0.999
+eps : 1e-08
+flood : False
+schedule : cos_lr
+lr_decay : 400
+gamma : 0.5
+batch_size : 4
+one_batch_n_sample : 1
+start_epoch : 0
+max_epoch : 500
+warmup_epoch : 0.05
+ckpt_dir : experiments/mamba_unet_x3/IXI_x2_8b
 gpu_id : 0
 num_workers : 4
 parallel : True
