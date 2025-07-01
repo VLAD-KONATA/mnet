@@ -207,8 +207,55 @@ class DWConv2d_BN_ReLU(nn.Sequential):
         # Create a new sequential model with fused layers
         fused_model = nn.Sequential(fused_dwconv3x3, relu, fused_dwconv1x1)
         return fused_model
+    
+class Conv2d_BN(torch.nn.Sequential):
+    def __init__(self, a, b, ks=1, stride=1, pad=0, dilation=1,
+                 groups=1, bn_weight_init=1,):
+        super().__init__()
+        self.add_module('c', torch.nn.Conv2d(
+            a, b, ks, stride, pad, dilation, groups, bias=False))
+        self.add_module('bn', torch.nn.BatchNorm2d(b))
+        torch.nn.init.constant_(self.bn.weight, bn_weight_init)
+        torch.nn.init.constant_(self.bn.bias, 0)
 
+    @torch.no_grad()
+    def fuse(self):
+        c, bn = self._modules.values()
+        w = bn.weight / (bn.running_var + bn.eps) ** 0.5
+        w = c.weight * w[:, None, None, None]
+        b = bn.bias - bn.running_mean * bn.weight / \
+            (bn.running_var + bn.eps) ** 0.5
+        m = torch.nn.Conv2d(w.size(1) * self.c.groups, w.size(
+            0), w.shape[2:], stride=self.c.stride, padding=self.c.padding, dilation=self.c.dilation,
+                            groups=self.c.groups)
+        m.weight.data.copy_(w)
+        m.bias.data.copy_(b)
+        return m
+        
+class FFN(torch.nn.Module):
+    def __init__(self, ed, h):
+        super().__init__()
+        self.pw1 = Conv2d_BN(ed, h)
+        self.act = torch.nn.ReLU()
+        self.pw2 = Conv2d_BN(h, ed, bn_weight_init=0)
 
+    def forward(self, x):
+        x = self.pw2(self.act(self.pw1(x)))
+        return x
+
+class Residual(torch.nn.Module):
+    def __init__(self, m, drop=0.):
+        super().__init__()
+        self.m = m
+        self.drop = drop
+
+    def forward(self, x):
+        if self.training and self.drop > 0:
+            return x + self.m(x) * torch.rand(x.size(0), 1, 1, 1,
+                                              device=x.device).ge_(self.drop).div(1 - self.drop).detach()
+        else:
+            return x + self.m(x)
+        
 class I2Block(nn.Module):
     def __init__(
         self, conv, n_feat, kernel_size,
@@ -217,6 +264,11 @@ class I2Block(nn.Module):
         self.wave=MBWTConv2d(64,64,3, wt_levels=1, ssm_ratio=1, forward_type="v052d",)
         self.dwconv=DWConv2d_BN_ReLU(64,64,3)
         self.res_scale = res_scale
+        self.dw1 = Residual(Conv2d_BN(64, 64, 3, 1, 1, groups=64, bn_weight_init=0.,))
+        self.ffn1 = Residual(FFN(64, int(64 * 2)))
+        self.dw0 = Residual(Conv2d_BN(64, 64, 3, 1, 1, groups=64, bn_weight_init=0.))
+        self.ffn0 = Residual(FFN(64, int(64 * 2)))
+
         self.unet=UNet(64,64)
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
@@ -227,7 +279,7 @@ class I2Block(nn.Module):
     )
 
     def forward(self, x):
-        
+        x = self.ffn0(self.dw0(x))
         x_dw=self.dwconv(x)
         x_wave=self.wave(x)
         #x_u=self.unet(x)
@@ -239,6 +291,7 @@ class I2Block(nn.Module):
         out = x_dw + x_wave + x_mamba + x
         #out = x_dw + x_wave  + x
         #out=x_u+x
+        out= self.ffn1(self.dw1(out))
         return out
 
 class I2Group(nn.Module):
