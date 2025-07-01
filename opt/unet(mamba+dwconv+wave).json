@@ -1,5 +1,5 @@
 {
-    "model"      : "mamba_unet_x3",
+    "model"      : "unet(mamba+dwconv+wave)",
 
     "kernel_size": 3,
     "n_feats": 64,
