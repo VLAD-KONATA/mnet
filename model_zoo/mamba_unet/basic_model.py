@@ -51,8 +51,12 @@ class I2Block(nn.Module):
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
+        mamba_x2=einops.rearrange(x,'b d h w -> (b d) w h')
+        mamba_x2=mamba_x2.contiguous()
+        output2 = self.mamba(mamba_x2)
+        x_mamba2=einops.rearrange( output2,'(b d) w h -> b d h w',b=x.shape[0])
         #out = x_inter + x_mamba + x
-        out = x_u + x_mamba + x
+        out = x_u + x_mamba +x_mamba2+ x
 
         #out=x_u+x
         return out
