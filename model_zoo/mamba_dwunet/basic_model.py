@@ -32,12 +32,14 @@ class I2Block(nn.Module):
             nn.PixelShuffle(2), # +
             nn.Conv2d(n_feat,n_feat,1,1,0)
         ]
+        self.unshuffle=nn.PixelUnshuffle(4)
+        self.shuffle=nn.PixelShuffle(4)
         self.inter_slice_branch = nn.Sequential(*inter_slice_branch)
         self.res_scale = res_scale
         self.unet=UNet(64,64)
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
-    d_model=256, # Model dimension d_model
+    d_model=int(64**2), # Model dimension d_model
     d_state=16,  # SSM state expansion factor
     d_conv=4,    # Local convolution width
     expand=2,    # Block expansion factor
@@ -46,11 +48,13 @@ class I2Block(nn.Module):
     def forward(self, x):
         x_u=self.unet(x)
        # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
+        mamba_x=self.unshuffle(x)
+        input=einops.rearrange(mamba_x,'b d h w -> b d (h w)')
+        input=input.contiguous()
+        output = self.mamba(input)
+        x_mamba=einops.rearrange( output,'b d (h w) -> b d h w',w=mamba_x.shape[-1])
+        x_mamba=self.shuffle(x_mamba)
 
-        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
-        mamba_x=mamba_x.contiguous()
-        output = self.mamba(mamba_x)
-        x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
         #mamba_x2=einops.rearrange(x,'b d h w -> (b d) w h')
         #mamba_x2=mamba_x2.contiguous()
         #output2 = self.mamba(mamba_x2)

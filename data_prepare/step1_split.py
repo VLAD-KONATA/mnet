@@ -5,11 +5,13 @@ from medpy.io import load
 import os, pickle
 import numpy as np
 
-test_set = pickle.load(open('./test_set.pt','rb'))
+test_set = pickle.load(open('data_prepare/test_set.pt','rb'))
 test_set = {k:test_set[k] for k in sorted(test_set.keys())}
 
-src_path = 'xxx/Task03_Liver'
-tgt_path = 'xxx/data_volume/Task03_Liver'
+#src_path = '/home/konata/Dataset/IXI-TD/origin'
+src_path = '/home/konata/Dataset/IXI-T2/origin'
+#tgt_path = '/home/konata/Dataset/IXI-TD/I3Net'
+tgt_path = '/home/konata/Dataset/IXI-T2/I3Net'
 
 os.makedirs(tgt_path,exist_ok=True)
 os.makedirs(os.path.join(tgt_path,'imagesTr'),exist_ok=True)
@@ -29,7 +31,8 @@ for inst in ['imagesTr','imagesTs']:
             img = np.clip(img,0,4095)
             img = img.astype("uint16")
             data = {'image': img, 'spacing': spacing}
-            if not patient.split('.')[0] in test_set:
+            #if not patient.split('.')[0] in test_set:
+            if inst=='imagesTr':
                 pickle.dump(data, open(os.path.join(tgt_path,'imagesTr', patient.replace('.nii.gz','.pt')), 'wb'))
                 print(f"{id}/{len(patients)}:volume finished, " + patient, img.shape)
 

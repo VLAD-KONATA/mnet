@@ -18,26 +18,7 @@ import optim
 #import val
 from select_loss import Select_Loss
 import torch.nn.functional as F
-from losses.laplacianpyramid import *
 
-from opt import *
-import torch.nn as nn
-import json
-from importlib import import_module
-
-def args_add_additinoal_attr(args,json_path):
-    dic = json.load(open(json_path,'r',))
-    for key,value in dic.items():
-        if key == '//':
-            continue
-        setattr(args,key,value)
-
-def select_tmodel(args):
-    opt_path = f'opt/{args.model}_multi.json'
-    args_add_additinoal_attr(args, opt_path)
-    module = import_module(f'model_zoo.{args.model.lower()}.basic_model')
-    model = module.make_model(args)
-    return model
 ####################################################################
 # seed
 GLOBAL_SEED = 777
@@ -47,6 +28,7 @@ torch.manual_seed(GLOBAL_SEED)
 torch.cuda.manual_seed(GLOBAL_SEED)
 torch.cuda.manual_seed_all(GLOBAL_SEED)
 mnad=False
+dist=True
 
 args.ckpt_dir = 'experiments/'+args.model+'/'+args.ckpt_dir
 os.makedirs(args.ckpt_dir,exist_ok=True)
@@ -60,29 +42,26 @@ trainset = trainSet(data_root=args.traindata_path,args=args)
 dataloader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,\
                 shuffle=False,num_workers=args.num_workers, pin_memory=False)
 
-smodel = select_model(args)
 # model
-tmodel = select_tmodel(args)
-checkpoint = torch.load('/home/konata/Git/mnet/experiments/mamba_unet_multi/IXI_x2_2x4b/pth/0500.pth', map_location=torch.device('cpu'))
-tmodel.load_state_dict(checkpoint['state_dict'])
+model = select_model(args)
 
+if args.resume:
+    print('load weight')
+    load_ckpt = torch.load('experiments/'+args.model+'/IXI_x2_2x4b/pth/0500.pth',map_location=torch.device('cpu'))
+    model.load_state_dict(load_ckpt['state_dict'])
+    #print('load weight success')
+    #args.start_epoch = load_ckpt['epoch']
 
-
-
-tmodel = tmodel.cuda()
-smodel = smodel.cuda()
+model = model.cuda()
 
 #### optim ####
-optimizer = torch.optim.Adam(smodel.parameters(), lr=args.lr)
+optimizer = optim.select_optim(args,model)
 # optimizer = torch.optim.Adam(model.parameters(),lr=args.lr, betas=(args.beta1, args.beta2), eps=args.eps)
 scheduler = optim.select_scheduler(args,optimizer)
 
-
-    # 定义优化器
 #### loss ####
-hard_loss = nn.L1Loss()
-#soft_loss = nn.KLDivLoss(reduction="batchmean")
-soft_loss = LaplacianLoss()
+loss_function = Select_Loss(args).cuda()
+
 
 
 ########################### train ###################################
@@ -98,10 +77,11 @@ if args.amp:
     scaler = torch.cuda.amp.GradScaler()
     autocast = torch.cuda.amp.autocast
 
-temp=7
-alpha=0.3
+msize=10
+mdim=512
+m_items = F.normalize(torch.rand((msize, mdim), dtype=torch.float), dim=1).cuda() # Initialize the memory items
 
-smodel.train()
+model.train()
 for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
     loss_epoch = 0
     psnr_epoch = 0
@@ -120,37 +100,27 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
 
         if args.amp:
             with autocast():
-                with torch.no_grad():
-                    tsr = tmodel(lr,True)
-                #print('pred_tmodel')
-                # 学生模型预测
-                ssr = smodel(lr,True)
-                #print('pred_smodel')
+                if dist:
+                    #sr=model(lr,True)
+                    sr,middle=model(lr)
+                    loss_iter = loss_function(sr,gt)
+                else:
+                    #sr=model(lr,True)
+                    sr=model(lr)
+                    loss_iter = loss_function(sr,gt)
 
-                # 计算hard_loss
-                student_hard_loss = hard_loss(ssr,gt)
-
-                # chatgpt版Loss
-                soft_student_outputs = F.log_softmax(ssr / temp, dim=1)
-                soft_teacher_outputs = F.softmax(tsr/temp,dim=1)
-
-                ditillation_loss = soft_loss(soft_student_outputs,soft_teacher_outputs)
-                loss = alpha * student_hard_loss + (1-alpha) * temp * temp * ditillation_loss
-
-                scaler.scale(loss).backward()
+                scaler.scale(loss_iter).backward()
                 scaler.step(optimizer)
                 scaler.update()
         else:
-            sr = smodel(lr)
-            '''
+            sr = model(lr)
             loss_iter = loss_function(sr,gt)
             loss_iter.backward()
-            '''
             optimizer.step()
 
         psnr_iter = 0
         for bz in range(gt.shape[0]):
-            psnr_iter += calc_psnr(gt[bz, :, :, :],ssr[bz, :, :, :]).item()
+            psnr_iter += calc_psnr(gt[bz, :, :, :],sr[bz, :, :, :]).item()
         psnr_iter /= (bz+1)  
 
         #### log ####    
@@ -158,11 +128,11 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
         log = r"epoch[{}/{}] iter[{}/{}] psnrTr:{:.6f} lossTr:{:.12f} lr:{:.12f}"\
             .format(epoch+1, args.max_epoch , \
                 iter+1, len(dataloader),\
-                psnr_iter,loss,lr_tmp)
+                psnr_iter,loss_iter,lr_tmp)
         now = str(datetime.datetime.now())
         print(now+' '+log)
 
-        loss_epoch += loss
+        loss_epoch += loss_iter
         psnr_epoch += psnr_iter
 
     loss_epoch /= (iter+1)
@@ -192,16 +162,17 @@ for epoch in tqdm(range(args.start_epoch,args.max_epoch)):
     with open(args.ckpt_dir + '/logs.txt',mode='a+') as f:
         f.write('\n'+now+log)
 
-    if epoch >int(0.99*args.max_epoch):
+    if epoch%100==0 or epoch==50:
+    #if epoch >int(0.99*args.max_epoch)or epoch==50:
         os.makedirs(args.ckpt_dir+'/pth',exist_ok=True)
         os.makedirs(args.ckpt_dir+'/keys',exist_ok=True)
         try:
-            torch.save({'epoch': epoch, 'state_dict': smodel.module.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
+            torch.save({'epoch': epoch, 'state_dict': model.module.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
         except:
-            torch.save({'epoch': epoch, 'state_dict': smodel.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
-
+            torch.save({'epoch': epoch, 'state_dict': model.state_dict()}, args.ckpt_dir + '/pth/' + str(epoch).zfill(4) + '.pth')
+        if mnad:
+            torch.save(m_items,os.path.join(args.ckpt_dir+'/keys/','key.pt'))
 
 # val_opt = True
 # if val_opt:
 #     val.val(args=args,model=model)
-

@@ -5,9 +5,9 @@ import numpy as np
 import nibabel as nib
 import os
 import pickle
-datapath = '/home/konata/Dataset/IXI-T2/I3Net/imagesTr/'
+datapath = '/home/konata/Dataset/3DT2/I3Net/imagesTr/'
 volume_list = os.listdir(datapath)
-savepath = '/home/konata/Dataset/IXI-T2/I3Net/slice/'
+savepath = '/home/konata/Dataset/3DT2/I3Net/slice/'
 os.makedirs(savepath,exist_ok=True)
 
 for i,volumename in enumerate(volume_list):

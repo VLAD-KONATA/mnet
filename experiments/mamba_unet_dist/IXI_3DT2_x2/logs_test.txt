@@ -1,0 +1,106 @@
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0500.pth
+[1 / 10] NAME:('ZHU YAN HUA',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.98 
+[2 / 10] NAME:('YU CUI QI',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.79 
+[3 / 10] NAME:('ye zhi kuan',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.71 
+[4 / 10] NAME:('ZHU XIN YI',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.89 
+[5 / 10] NAME:('ZHANG HAO',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.89 
+[6 / 10] NAME:('ZHU YONG JIE',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.99 
+[7 / 10] NAME:('ZHAO JIN',) PSNR:55.03997802734375 x_y_ssim:0.9978 x_z_ssim:0.9980 y_z_ssim:0.9980 time:10.43 
+[8 / 10] NAME:('ZHANG LAN',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.03 
+[9 / 10] NAME:('ZHOU LI JUAN',) PSNR:66.3507308959961 x_y_ssim:0.9995 x_z_ssim:0.9997 y_z_ssim:0.9997 time:0.91 
+[10 / 10] NAME:('ZHOU ZI HENG',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.96 
+PSNR: 60.69535446166992 x_y_ssim: nan x_z_ssim: nan y_z_ssim: nan
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0500.pth
+[1 / 10] NAME:('ZHU YAN HUA',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.37 
+[2 / 10] NAME:('YU CUI QI',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.90 
+[3 / 10] NAME:('ye zhi kuan',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.33 
+[4 / 10] NAME:('ZHU XIN YI',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.50 
+[5 / 10] NAME:('ZHANG HAO',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.42 
+[6 / 10] NAME:('ZHU YONG JIE',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.10 
+[7 / 10] NAME:('ZHAO JIN',) PSNR:55.03997802734375 x_y_ssim:0.9978 x_z_ssim:0.9980 y_z_ssim:0.9980 time:10.48 
+[8 / 10] NAME:('ZHANG LAN',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.77 
+[9 / 10] NAME:('ZHOU LI JUAN',) PSNR:66.3507308959961 x_y_ssim:0.9995 x_z_ssim:0.9997 y_z_ssim:0.9997 time:0.93 
+[10 / 10] NAME:('ZHOU ZI HENG',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:11.86 
+PSNR: 60.69535446166992 x_y_ssim: nan x_z_ssim: nan y_z_ssim: nan
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0100.pth
+[1 / 10] NAME:('ZHU YAN HUA',) PSNR:50.85343933105469 x_y_ssim:0.9961 x_z_ssim:0.9966 y_z_ssim:0.9966 time:24.64 
+[2 / 10] NAME:('YU CUI QI',) PSNR:51.3087158203125 x_y_ssim:0.9961 x_z_ssim:0.9966 y_z_ssim:0.9966 time:23.59 
+[3 / 10] NAME:('ye zhi kuan',) PSNR:50.52301788330078 x_y_ssim:0.9957 x_z_ssim:0.9961 y_z_ssim:0.9960 time:23.40 
+[4 / 10] NAME:('ZHU XIN YI',) PSNR:50.75819396972656 x_y_ssim:0.9959 x_z_ssim:0.9963 y_z_ssim:0.9963 time:23.68 
+[5 / 10] NAME:('ZHANG HAO',) PSNR:50.274696350097656 x_y_ssim:0.9957 x_z_ssim:0.9961 y_z_ssim:0.9960 time:23.89 
+[6 / 10] NAME:('ZHU YONG JIE',) PSNR:51.174705505371094 x_y_ssim:0.9966 x_z_ssim:0.9969 y_z_ssim:0.9969 time:23.40 
+[7 / 10] NAME:('ZHAO JIN',) PSNR:51.059566497802734 x_y_ssim:0.9952 x_z_ssim:0.9955 y_z_ssim:0.9955 time:20.64 
+[8 / 10] NAME:('ZHANG LAN',) PSNR:50.306602478027344 x_y_ssim:0.9958 x_z_ssim:0.9962 y_z_ssim:0.9962 time:23.35 
+[9 / 10] NAME:('ZHOU LI JUAN',) PSNR:60.71334457397461 x_y_ssim:0.9979 x_z_ssim:0.9987 y_z_ssim:0.9985 time:1.83 
+[10 / 10] NAME:('ZHOU ZI HENG',) PSNR:50.53607177734375 x_y_ssim:0.9961 x_z_ssim:0.9966 y_z_ssim:0.9965 time:23.77 
+PSNR: 51.75083541870117 x_y_ssim: 0.996118 x_z_ssim: 0.996556 y_z_ssim: 0.996507
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0100.pth
+[1 / 10] NAME:('ZHU YAN HUA',) PSNR:50.85343933105469 x_y_ssim:0.9961 x_z_ssim:0.9966 y_z_ssim:0.9966 time:23.85 
+[2 / 10] NAME:('YU CUI QI',) PSNR:51.3087158203125 x_y_ssim:0.9961 x_z_ssim:0.9966 y_z_ssim:0.9966 time:23.28 
+[3 / 10] NAME:('ye zhi kuan',) PSNR:50.52301788330078 x_y_ssim:0.9957 x_z_ssim:0.9961 y_z_ssim:0.9960 time:23.39 
+[4 / 10] NAME:('ZHU XIN YI',) PSNR:50.75819396972656 x_y_ssim:0.9959 x_z_ssim:0.9963 y_z_ssim:0.9963 time:23.54 
+[5 / 10] NAME:('ZHANG HAO',) PSNR:50.274696350097656 x_y_ssim:0.9957 x_z_ssim:0.9961 y_z_ssim:0.9960 time:23.61 
+[6 / 10] NAME:('ZHU YONG JIE',) PSNR:51.174705505371094 x_y_ssim:0.9966 x_z_ssim:0.9969 y_z_ssim:0.9969 time:23.88 
+[7 / 10] NAME:('ZHAO JIN',) PSNR:51.059566497802734 x_y_ssim:0.9952 x_z_ssim:0.9955 y_z_ssim:0.9955 time:20.51 
+[8 / 10] NAME:('ZHANG LAN',) PSNR:50.306602478027344 x_y_ssim:0.9958 x_z_ssim:0.9962 y_z_ssim:0.9962 time:23.41 
+[9 / 10] NAME:('ZHOU LI JUAN',) PSNR:60.71334457397461 x_y_ssim:0.9979 x_z_ssim:0.9987 y_z_ssim:0.9985 time:1.83 
+[10 / 10] NAME:('ZHOU ZI HENG',) PSNR:50.53607177734375 x_y_ssim:0.9961 x_z_ssim:0.9966 y_z_ssim:0.9965 time:23.30 
+PSNR: 51.75083541870117 x_y_ssim: 0.996118 x_z_ssim: 0.996556 y_z_ssim: 0.996507
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0500.pth
+[1 / 10] NAME:('ZHU YAN HUA',) PSNR:54.540138244628906 x_y_ssim:0.9980 x_z_ssim:0.9985 y_z_ssim:0.9984 time:12.58 
+[2 / 10] NAME:('YU CUI QI',) PSNR:54.15770721435547 x_y_ssim:0.9978 x_z_ssim:0.9982 y_z_ssim:0.9982 time:12.18 
+[3 / 10] NAME:('ye zhi kuan',) PSNR:53.68501663208008 x_y_ssim:0.9976 x_z_ssim:0.9980 y_z_ssim:0.9980 time:12.12 
+[4 / 10] NAME:('ZHU XIN YI',) PSNR:54.00116729736328 x_y_ssim:0.9977 x_z_ssim:0.9981 y_z_ssim:0.9981 time:12.00 
+[5 / 10] NAME:('ZHANG HAO',) PSNR:53.303585052490234 x_y_ssim:0.9975 x_z_ssim:0.9979 y_z_ssim:0.9978 time:12.00 
+[6 / 10] NAME:('ZHU YONG JIE',) PSNR:54.40972137451172 x_y_ssim:0.9982 x_z_ssim:0.9985 y_z_ssim:0.9984 time:12.14 
+[7 / 10] NAME:('ZHAO JIN',) PSNR:53.38401794433594 x_y_ssim:0.9969 x_z_ssim:0.9973 y_z_ssim:0.9973 time:10.52 
+[8 / 10] NAME:('ZHANG LAN',) PSNR:53.70775604248047 x_y_ssim:0.9978 x_z_ssim:0.9982 y_z_ssim:0.9982 time:11.94 
+[9 / 10] NAME:('ZHOU LI JUAN',) PSNR:64.57090759277344 x_y_ssim:0.9992 x_z_ssim:0.9996 y_z_ssim:0.9995 time:0.94 
+[10 / 10] NAME:('ZHOU ZI HENG',) PSNR:54.281063079833984 x_y_ssim:0.9982 x_z_ssim:0.9985 y_z_ssim:0.9985 time:11.90 
+PSNR: 55.00410804748535 x_y_ssim: 0.997907 x_z_ssim: 0.998265 y_z_ssim: 0.998237
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/3DT2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_3DT2_x2/pth/0500.pth

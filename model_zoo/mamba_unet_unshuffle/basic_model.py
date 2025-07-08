@@ -32,12 +32,14 @@ class I2Block(nn.Module):
             nn.PixelShuffle(2), # +
             nn.Conv2d(n_feat,n_feat,1,1,0)
         ]
+        self.unshuffle=nn.PixelUnshuffle(4)
+        self.shuffle=nn.PixelShuffle(4)
         self.inter_slice_branch = nn.Sequential(*inter_slice_branch)
         self.res_scale = res_scale
         self.unet=UNet(64,64)
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
-    d_model=256, # Model dimension d_model
+    d_model=int(64**2), # Model dimension d_model
     d_state=16,  # SSM state expansion factor
     d_conv=4,    # Local convolution width
     expand=2,    # Block expansion factor
@@ -46,11 +48,13 @@ class I2Block(nn.Module):
     def forward(self, x):
         x_u=self.unet(x)
        # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
+        mamba_x=self.unshuffle(x)
+        input=einops.rearrange(mamba_x,'b d h w -> b d (h w)')
+        input=input.contiguous()
+        output = self.mamba(input)
+        x_mamba=einops.rearrange( output,'b d (h w) -> b d h w',w=mamba_x.shape[-1])
+        x_mamba=self.shuffle(x_mamba)
 
-        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
-        mamba_x=mamba_x.contiguous()
-        output = self.mamba(mamba_x)
-        x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
         #mamba_x2=einops.rearrange(x,'b d h w -> (b d) w h')
         #mamba_x2=mamba_x2.contiguous()
         #output2 = self.mamba(mamba_x2)
@@ -122,7 +126,15 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        
+        blocks=2
+        cblayers=3
+        depth=1
+        '''
+        blocks=1
+        cblayers=2
+        depth=1
+        '''
+        self.blocks=blocks
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -137,16 +149,15 @@ class newmodel(nn.Module):
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
-        
         modules_body = [
             I2Group(
-                conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
-                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(2//2)]
+                conv, n_depth=depth,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
+                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(blocks)]
         self.body = nn.ModuleList(modules_body)
         
-        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(2)])
+        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(cblayers)])
 
-        self.fuse_align = nn.Conv2d(2*n_feats,n_feats,1,1,0)
+        self.fuse_align = nn.Conv2d(cblayers*n_feats,n_feats,1,1,0)
 
         modules_tail = [
             conv(n_feats, n_feats, kernel_size),
@@ -161,7 +172,7 @@ class newmodel(nn.Module):
                 nn.Conv2d(32, out_slice, kernel_size=1)
             )
         
-    def forward(self, x,train=True):
+    def forward(self, x):
         #print('model_name=mamba_unet')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
@@ -172,17 +183,18 @@ class newmodel(nn.Module):
         align_list = []
         res = self.alignment[0](res)+res
         align_list.append(res)
-
         id_list=[]
-        id_list=[0]
-
-        #id_list=[1,3]
+        id_list=[0,self.blocks-1]
+        #id_list=[3]
+        #id_list=[3]
         for id,layer in enumerate(self.body):
             res = layer(res)
+            #print(id)
             if  id==0:
                 res_middle=self.aux_s(res)
             if id in id_list:
-                res = self.alignment[id//2+1](res) + res
+                res = self.alignment[id+1](res) + res
+                #res = self.alignment[id//2+1](res) + res
                 align_list.append(res)
 
         res = self.fuse_align(torch.cat(align_list,1))
@@ -195,7 +207,7 @@ class newmodel(nn.Module):
         out = out.permute(0,2,3,1).contiguous()
         
         return out,res_middle
-
+        #return out
 
 if __name__ == '__main__':
     import argparse

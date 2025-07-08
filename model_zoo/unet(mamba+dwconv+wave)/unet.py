@@ -1,6 +1,12 @@
 import torch
 import torch.nn as nn
-
+from torch.nn import init
+import einops
+from functools import partial
+import torch.nn.functional as F
+from einops.layers.torch import Rearrange
+from mamba_ssm import Mamba
+import pywt
 class I2Block(nn.Module):
     def __init__(
         self, inch,outch, kernel_size=3,id=0,res_scale=1):
@@ -12,7 +18,7 @@ class I2Block(nn.Module):
         #self.unet=UNet(64,64)
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
-    d_model=(256/(2**(id-1)))**2, # Model dimension d_model
+    d_model=int((256/(2**(id-1)))**2), # Model dimension d_model
     d_state=16,  # SSM state expansion factor
     d_conv=4,    # Local convolution width
     expand=2,    # Block expansion factor
@@ -28,8 +34,8 @@ class I2Block(nn.Module):
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange(output,'b d (h w) -> b d h w',w=x.shape[-1])
         
-        #out = x_dw + x_wave + x_mamba + x
-        out = x_dw +x_wave+ x_mamba + x
+        out = x_dw + x_wave + x_mamba + x
+        #out = x_dw + x_mamba + x
         #out = x_dw + x_wave  + x
         #out=x_u+x
         #out= self.ffn1(self.dw1(out))
@@ -58,13 +64,13 @@ class UNet(nn.Module):
                                         I2Block(features * 16, features * 16,3,5))
 
         self.upconv4 = nn.ConvTranspose2d(features * 16, features * 8, kernel_size=2, stride=2)
-        #self.decoder4 = UNet._block(features * 16, features * 8, name="dec4")
-        self.decoder4 = nn.Sequential(UNet._block(features * 16, features * 8, name="dec4"),
-                                      I2Block(features * 8, features * 8,3,4))
+        self.decoder4 = UNet._block(features * 16, features * 8, name="dec4")
+        #self.decoder4 = nn.Sequential(UNet._block(features * 16, features * 8, name="dec4"),
+        #                             I2Block(features * 8, features * 8,3,4))
         self.upconv3 = nn.ConvTranspose2d(features * 8, features * 4, kernel_size=2, stride=2)
-        #self.decoder3 = UNet._block(features * 8, features * 4, name="dec3")
-        self.decoder3 = nn.Sequential(UNet._block(features * 8, features * 4, name="dec3"),
-                                      I2Block(features * 8, features * 4,3,3))
+        self.decoder3 = UNet._block(features * 8, features * 4, name="dec3")
+        #self.decoder3 = nn.Sequential(UNet._block(features * 8, features * 4, name="dec3"),
+        #                              I2Block(features * 4, features * 4,3,3))
         self.upconv2 = nn.ConvTranspose2d(features * 4, features * 2, kernel_size=2, stride=2)
         self.decoder2 = UNet._block(features * 4, features * 2, name="dec2")
         self.upconv1 = nn.ConvTranspose2d(features * 2, features, kernel_size=2, stride=2)
@@ -150,7 +156,7 @@ class MBWTConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=5, stride=1, bias=True, wt_levels=1, wt_type='db1',ssm_ratio=1,forward_type="v05",):
         super(MBWTConv2d, self).__init__()
 
-        assert in_channels == out_channels
+        #assert in_channels == out_channels
 
         self.in_channels = in_channels
         self.wt_levels = wt_levels

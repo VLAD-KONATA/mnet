@@ -438,7 +438,8 @@ class newmodel(nn.Module):
         out = out.permute(0,2,3,1).contiguous()
         
         #return out,res_middle
-        return out
+        return out,1
+        #return out
 
 if __name__ == '__main__':
     import argparse

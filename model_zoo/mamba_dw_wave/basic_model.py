@@ -281,15 +281,15 @@ class I2Block(nn.Module):
     def forward(self, x):
        # x = self.ffn0(self.dw0(x))
         x_dw=self.dwconv(x)
-        #x_wave=self.wave(x)
+        x_wave=self.wave(x)
         #x_u=self.unet(x)
         mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
         mamba_x=mamba_x.contiguous()
         output = self.mamba(mamba_x)
         x_mamba=einops.rearrange(output,'(b d) h w -> b d h w',b=x.shape[0])
         
-        #out = x_dw + x_wave + x_mamba + x
-        out = x_dw + x_mamba + x
+        out = x_dw + x_wave + x_mamba + x
+        #out = x_dw + x_mamba + x
         #out = x_dw + x_wave  + x
         #out=x_u+x
         #out= self.ffn1(self.dw1(out))

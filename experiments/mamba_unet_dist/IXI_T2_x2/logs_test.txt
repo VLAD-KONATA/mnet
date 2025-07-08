@@ -239,3 +239,58 @@ checkpoint:experiments/mamba_unet_dist/IXI_x2/pth/0500.pth
 [99 / 100] NAME:('IXI327-HH-1999-T2',) PSNR:53.48967742919922 x_y_ssim:0.9976 x_z_ssim:0.9976 y_z_ssim:0.9976 time:3.68 
 [100 / 100] NAME:('IXI438-HH-2155-T2',) PSNR:50.1141357421875 x_y_ssim:0.9947 x_z_ssim:0.9946 y_z_ssim:0.9948 time:3.63 
 PSNR: 49.59593338012695 x_y_ssim: 0.992745 x_z_ssim: 0.992571 y_z_ssim: 0.992859
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T1/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_x2/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T1/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_x2/pth/0500.pth
+
+
+
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_T2_x2/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_T2_x2/pth/0500.pth
+[1 / 100] NAME:('IXI098-Guys-0745-T2',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:12.62 
+[2 / 100] NAME:('IXI364-Guys-0920-T2',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:9.50 
+[3 / 100] NAME:('IXI420-Guys-1028-T2',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:9.50 
+[4 / 100] NAME:('IXI328-HH-2295-T2',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:9.71 
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_T2_x2/pth/0500.pth
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_unet_dist/IXI_T2_x2/pth/0500.pth
+[1 / 100] NAME:('IXI098-Guys-0745-T2',) PSNR:nan x_y_ssim:nan x_z_ssim:nan y_z_ssim:nan time:19.78 
