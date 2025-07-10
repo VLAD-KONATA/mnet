@@ -27,8 +27,8 @@ class SS2D(nn.Module):
         self,
         d_model,
         d_state=16,
-        #d_conv=3,
-        d_conv=4,
+        d_conv=3,
+        #d_conv=4,
         expand=2,
         dt_rank="auto",
         dt_min=0.001,
@@ -210,6 +210,8 @@ class I2Block(nn.Module):
 
         self.res_scale = res_scale
         self.unet=UNet(64,64)
+        self.unshuffle=nn.PixelUnshuffle(4)
+        self.shuffle=nn.PixelShuffle(4)
         '''
         self.mamba= Mamba(
     # This module uses roughly 3 * expand * d_model^2 parameters
@@ -219,15 +221,19 @@ class I2Block(nn.Module):
     expand=2,    # Block expansion factor
     )
     '''
-        self.mamba= SS2D(d_model=256, dropout=0, d_state=16)
+        self.mamba= SS2D(d_model=1024, dropout=0, d_state=16)
             
     def forward(self, x):
         x_u=self.unet(x)
        # x_inter = self.inter_slice_branch(x).mul(self.res_scale)
-        mamba_x=einops.rearrange(x,'b d h w -> (b d) h w')
-        mamba_x=mamba_x.contiguous()
-        output = self.mamba(mamba_x)
-        x_mamba=einops.rearrange( output,'(b d) h w -> b d h w',b=x.shape[0])
+        mamba_x=self.unshuffle(x)
+        #input=einops.rearrange(mamba_x,'b d h w -> b d (h w)')
+        input=einops.rearrange(mamba_x,'b d h w -> b h w d')
+        input=input.contiguous()
+        output = self.mamba(input)
+        #x_mamba=einops.rearrange( output,'b d (h w) -> b d h w',w=mamba_x.shape[-1])
+        x_mamba=einops.rearrange( output,'b h w d -> b d h w')
+        x_mamba=self.shuffle(x_mamba)
         #out = x_inter + x_mamba + x
         out = x_u + x_mamba + x
         return out
@@ -292,7 +298,14 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        
+        '''
+        blocks=1
+        cblayers=2
+        depth=1
+        '''
+        blocks=3
+        cblayers=2
+        depth=1
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -304,19 +317,20 @@ class newmodel(nn.Module):
         head_num = args.head_num
         win_num_sqrt = args.win_num_sqrt
         window_size = args.window_size
+        conv=default_conv
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
         
         modules_body = [
             I2Group(
-                conv, n_depth=2,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
-                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(8//2)]
+                conv, n_depth=depth,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
+                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(blocks)]
         self.body = nn.ModuleList(modules_body)
         
-        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(3)])
+        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(cblayers)])
 
-        self.fuse_align = nn.Conv2d(3*n_feats,n_feats,1,1,0)
+        self.fuse_align = nn.Conv2d(cblayers*n_feats,n_feats,1,1,0)
 
         modules_tail = [
             conv(n_feats, n_feats, kernel_size),
@@ -324,22 +338,35 @@ class newmodel(nn.Module):
             conv(n_feats,out_slice,kernel_size)]
         self.tail = nn.Sequential(*modules_tail)
         
-    def forward(self, x,train=True):
+        self.aux_s = nn.Sequential(
+                nn.Conv2d(64, 32, kernel_size=3, padding=1, bias=False),
+                nn.BatchNorm2d(32),
+                nn.ReLU(inplace=True),
+                nn.Dropout2d(p=0.1),
+                nn.Conv2d(32, out_slice, kernel_size=1)
+            )
+        
+    def forward(self, x):
         #print('model_name=mamba_unet_multi')
         x = x.permute(0,3,1,2)
         x = x.contiguous()
         x_head = self.head(x) 
-        
         res = x_head
 
         align_list = []
         res = self.alignment[0](res)+res
         align_list.append(res)
-
+        id_list=[]
+        id_list=[2]
+        
+        #id_list=[1,3]
         for id,layer in enumerate(self.body):
             res = layer(res)
-            if id in [1,3,7]:
-                res = self.alignment[id//2+1](res) + res
+            if  id==0:
+                res_middle=self.aux_s(res)
+            if id in id_list:
+                res = self.alignment[id//2](res) + res
+                #res = self.alignment[id+1](res) + res
                 align_list.append(res)
 
         res = self.fuse_align(torch.cat(align_list,1))
@@ -351,7 +378,7 @@ class newmodel(nn.Module):
         out[:,::self.args.upscale] = x
         out = out.permute(0,2,3,1).contiguous()
         
-        return out
+        return out,res_middle
 
 
 if __name__ == '__main__':
@@ -377,7 +404,7 @@ if __name__ == '__main__':
     from torchsummary import summary
     from thop import profile
     #summary(model,(256, 256, 4))
-    #pred=model(x)
-    #print(pred.shape)
-    flops,params=profile(model,(x,))
-    print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+    pred=model(x)
+    print(pred.shape)
+    #flops,params=profile(model,(x,))
+    #print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))

@@ -1,0 +1,9 @@
+
+
+
+
+
+START EXPERIMENT
+testdata:/home/konata/Dataset/IXI-T2/I3Net/imagesTs
+checkpoint:experiments/mamba_dwunet/IXI_x2/pth/0500.pth
+[1 / 100] NAME:('IXI098-Guys-0745-T2',) PSNR:43.750213623046875 x_y_ssim:0.9893 x_z_ssim:0.9890 y_z_ssim:0.9896 time:11.22 
