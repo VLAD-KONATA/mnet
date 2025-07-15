@@ -49,7 +49,11 @@ class trainSet(Dataset):
             if random.random() >= 0.5:
                 volume = volume[::-1,:,:].copy()
 
-            volume = util.crop_center(volume,256,256) #[256,256,7]
+            if volumeIn.shape[-2]>256:
+                volumeIn = util.random_crop(volumeIn,256,256)
+            else:
+                volumeIn = util.crop_center(volumeIn,256,256)   #[256,256,7]
+
             volume=torch.from_numpy(volume)
             return volume
 
@@ -75,10 +79,14 @@ class testSet(Dataset):
         volumepath = self.trainlist[index]
         with open(volumepath, 'rb') as _f: volumeIn = pickle.load(_f)
         volumeIn = volumeIn['image'] #[h,w,s] [0,4095]
-        volumeIn = util.crop_center(volumeIn,256,256)
+        '''
+        if volumeIn.shape[-2]>256:
+            volumeIn = util.random_crop(volumeIn,256,256)
+        else:
+            volumeIn = util.crop_center(volumeIn,256,256)
         volumeIn = util.normalize(volumeIn).astype(np.float32)
+        '''
         volumeIn=torch.from_numpy(volumeIn) # w,h,s
-        
         name = volumepath.split('/')[-1].split('.')[0]
         return name,volumeIn # [h,w,slice]
 

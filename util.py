@@ -20,6 +20,12 @@ def normalize(slice):
     
     return slice
 
+def random_crop(img,cropx,cropy):
+    (w, h, d) = img.shape
+    w1 = np.random.randint(0, w - cropx)
+    h1 = np.random.randint(0, h - cropy)
+    return img[w1:w1 + cropx, h1:h1 + cropy,:]
+    
 class RandomCrop3d(object):
     """
     Crop randomly the image in a sample
