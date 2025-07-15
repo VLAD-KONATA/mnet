@@ -126,7 +126,14 @@ class newmodel(nn.Module):
     def __init__(self,args=None,conv=default_conv):
         super(newmodel, self).__init__()
         self.args = args
-        
+        '''
+        blocks=1
+        cblayers=2
+        depth=1
+        '''
+        blocks=4
+        cblayers=3
+        depth=1
         n_feats = args.n_feats #64
         kernel_size = args.kernel_size # 3
         num_blocks = args.num_blocks # 16
@@ -138,25 +145,27 @@ class newmodel(nn.Module):
         head_num = args.head_num
         win_num_sqrt = args.win_num_sqrt
         window_size = args.window_size
+        conv=default_conv
         self.head = nn.Sequential(conv(in_slice,n_feats,kernel_size),
                                   nn.ReLU(),
                                   conv(n_feats,n_feats,kernel_size))
         
         modules_body = [
             I2Group(
-                conv, n_depth=1,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
-                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(2//2)]
+                conv, n_depth=depth,n_feat=n_feats, kernel_size=kernel_size, act=act, res_scale=res_scale, 
+                head_num=head_num, win_num_sqrt=win_num_sqrt,window_size=window_size) for _ in range(blocks)]
         self.body = nn.ModuleList(modules_body)
         
-        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(2)])
+        self.alignment = nn.ModuleList([CrossViewBlock(n_feats) for _ in range(cblayers)])
 
-        self.fuse_align = nn.Conv2d(2*n_feats,n_feats,1,1,0)
+        self.fuse_align = nn.Conv2d(cblayers*n_feats,n_feats,1,1,0)
 
         modules_tail = [
             conv(n_feats, n_feats, kernel_size),
             nn.ReLU(),
             conv(n_feats,out_slice,kernel_size)]
         self.tail = nn.Sequential(*modules_tail)
+        
         self.aux_s = nn.Sequential(
                 nn.Conv2d(64, 32, kernel_size=3, padding=1, bias=False),
                 nn.BatchNorm2d(32),
@@ -178,9 +187,9 @@ class newmodel(nn.Module):
         align_list.append(res)
 
         id_list=[]
-        id_list=[0]
+        #id_list=[0]
 
-        #id_list=[1,3]
+        id_list=[1,3]
         for id,layer in enumerate(self.body):
             res = layer(res)
             if  id==0:
